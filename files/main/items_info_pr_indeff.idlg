@@ -1,0 +1,779 @@
+
+
+
+DIALOG items_info_pr_indeff,  tabtitle("  Indirect Effect  ")
+BEGIN
+  DEFINE colu0  20
+  DEFINE colu1 70
+  DEFINE colu11 155
+  DEFINE colu2 180
+  DEFINE colu3 310
+  DEFINE colu4 440
+  DEFINE colu5 470
+  DEFINE colu6 560
+  DEFINE colu7 650
+  DEFINE colu8 740
+  
+  DEFINE coluwd0 55
+  DEFINE coluwd1 100
+  DEFINE coluwd11 80
+  DEFINE coluwd111 40
+  DEFINE coluwd4 160
+
+
+ CHECKBOX chk_per21  10    10  120 .,             ///
+         label("Indirect effects: ")                 ///
+        onclickon(program ptba_options_pr_ind_items)                      ///
+        onclickoff(script  tba_options_pr_ind_items) default(0) option(ioc)
+
+	
+     
+GROUPBOX iogr 10    +30    840 120,                      ///
+           label("I/O price change model")			
+			
+        TEXT     tx_ap_ini 20     +30       120       .,           ///
+          label("The main model:") 
+      
+COMBOBOX cb_ioap 140      @          270       .,       ///
+          contents(comb_appr_ini)                             ///
+          values(comb_appr_val)                                     ///                            
+          default(1)                  ///
+          dropdownlist option(iomodel) 	 onselchangelist(cond2_change)
+		  
+ TEXT     tx_ap_ini_sh 20     +25       120       .,           ///
+          label("Price shocks:") 
+      
+COMBOBOX cb_ioap_sh 140      @          270       .,       ///
+          contents(comb_appr_sh_ini)                             ///
+          values(comb_appr_sh_val)                                     ///                            
+          default(1)                   ///
+          dropdownlist option(tyshock) 		
+		  
+ TEXT     tx_ap_ini_ad 20     +25       120       .,           ///
+          label("Price adjustment:") 
+      
+COMBOBOX cb_ioap_ad 140      @          270       .,       ///
+          contents(comb_appr_ad_ini)                        ///
+          values(comb_appr_ad_val)                          ///                            
+          default(1)    onselchangelist(shock_adjust)      ///
+          dropdownlist option(adshock) 			  
+		  
+  TEXT     tx_np 430    @        120       .,           ///
+          label("Number of periods") 
+		  		  
+   EDIT    ed_np 540     @     100      .,                 ///
+              option(nadp)      default(1) 
+
+		
+   GROUPBOX chk_per22  10    +50  840 160,                         ///
+            label("Price shock and I/O matrix info: ")    
+ 
+    TEXT  tx_dbsfile     20    +20    160      .,                 ///  
+         label("Data file of the I/O matrix:*")                                
+   
+    FILE  dbiom      220    @     260      .,                    ///
+    label ("Browse...")    save option("iomatrix")                   ///
+    filter("MetaFile (*.dta)*.dta*.* (*.*)*.*") 
+	
+   TEXT     tx_nshocks 20      +30      220       .,           ///
+          label("Number of Exogenous shocks:") 
+         
+   COMBOBOX cb_nshocks 220        @        100       .,        ///
+		  contents(shock_contents)                             ///
+          onselchangelist(shock_change) default(1)             ///
+          dropdownlist  option(nshocks)
+
+     CHECKBOX  allind   340     @       300 . , ///
+ label("Direct effects of price shocks are not indicated.") option(allind) default(0)  
+ 
+                  
+	
+	TEXT  tx_secp1   300    +25     60      .,                 ///
+             label("Shock 1")  
+    
+	TEXT  tx_secp2   370    @     60      .,                 ///
+             label("Shock 2")  
+			 
+	TEXT  tx_secp3   440    @     60      .,                 ///
+             label("Shock 3")  		 
+	
+	TEXT  tx_secp4   510    @     60      .,                 ///
+             label("Shock 4")  
+
+	TEXT  tx_secp5   580    @     60      .,                 ///
+             label("Shock 5")  
+	
+	TEXT  tx_secp6   650    @     60      .,                 ///
+             label("Shock 6")  
+	 
+	TEXT txt_secp     20    +20    300      .,                 ///  
+                  label("The position of sector(s) with price change(s):*")
+	EDIT  ed_secp1   300    @     60      .,                 ///
+              option(secp)      default(1) 
+			  
+    EDIT  ed_secp2   370    @     60      .,                 ///
+              option(secp)      default(2) 
+			  
+    EDIT  ed_secp3   440    @     60      .,                 ///
+              option(secp)      default(3)
+			  
+	EDIT  ed_secp4   510    @     60      .,                 ///
+              option(secp)      default(4) 
+			  
+    EDIT  ed_secp5   580    @     60      .,                 ///
+              option(secp)      default(5) 
+			  
+    EDIT  ed_secp6   650    @     60      .,                 ///
+              option(secp)      default(6) 
+			  
+			  
+	TEXT txt_pr    20    +25    280      .,                 ///  
+                  label("The level of the exogeneous price change (in %):*   ")                           
+       
+    EDIT  ed_pr1    300    @    60      .,                 ///
+                  default(10) option(pr) 
+	
+	EDIT  ed_pr2    370    @    60      .,                 ///
+                  default(10) option(pr)
+	
+	EDIT  ed_pr3    440    @    60      .,                 ///
+                  default(10) option(pr) 
+
+	EDIT  ed_pr4    510    @    60      .,                 ///
+                  default(10) option(pr) 
+
+	EDIT  ed_pr5    580    @    60      .,                 ///
+                  default(10) option(pr) 
+ 
+    EDIT  ed_pr6    650    @    60      .,                 ///
+                  default(10) option(pr) 
+   
+
+		  
+
+  
+
+
+GROUPBOX chk_per11  10   +50  840 170,                         ///
+            label("Information on main post consumptions items (information in  variables): ")
+    
+
+ TEXT     tx_items 20      +25      255       .,           ///
+          label("Number of the main post consumptions items*:") 
+           
+          
+ EDIT    ed_items 280      @         200       .,        ///
+         option(initems)    default(10)                
+   
+ TEXT     tx_fra  20   +25      250    .,           ///
+          label("Short names of the main post consumptions:")
+		  
+		  
+  VARNAME   var_sn    280     @         200    .,           ///
+ label("")      option(isnames) 
+	
+  TEXT     tx_fr2   20    +25     250    .,           ///
+          label("Varnames of main post consumptions:*")
+                  
+   VARNAME  var_item    280     @        200    .,           ///
+   label("")  option(iitnames)              
+
+   
+   TEXT     tx_in3     20      +25        260         .,           ///
+    label("Elasticity")
+    
+	 VARNAME  var_elas1    280     @         200    .,           ///
+        label("")  option(ielas) 
+               
+
+   TEXT     tx_ms     20      +25        250         .,           ///
+        label("Matching I/O sectors")           
+
+  
+ VARNAME  var_ms   280      @         200        .,           ///
+        option(match)      default()                                        ///
+        label("")    
+	  
+		
+END
+
+
+
+
+
+
+PROGRAM ptba_options_pr_ind_items
+BEGIN
+             
+        if items_info_pr_indeff.chk_per21 {
+		call items_info_pr_indeff.tx_ap_ini.enable	
+		call items_info_pr_indeff.iogr.enable
+		call items_info_pr_indeff.cb_ioap.enable
+		call items_info_pr_indeff.tx_ap_ini_sh.enable
+		call items_info_pr_indeff.cb_ioap_sh.enable
+		call items_info_pr_indeff.tx_ap_ini_ad.enable
+		call items_info_pr_indeff.cb_ioap_ad.enable
+		call items_info_pr_indeff.tx_np.enable
+		call items_info_pr_indeff.ed_np.enable
+		call items_info_pr_indeff.chk_per22.enable
+		call items_info_pr_indeff.tx_dbsfile.enable
+		call items_info_pr_indeff.dbiom.enable
+		call items_info_pr_indeff.tx_nshocks.enable
+		call items_info_pr_indeff.cb_nshocks.enable
+		call items_info_pr_indeff.tx_secp1.enable
+		call items_info_pr_indeff.tx_secp2.enable
+		call items_info_pr_indeff.tx_secp3.enable
+		call items_info_pr_indeff.tx_secp4.enable
+		call items_info_pr_indeff.tx_secp5.enable
+		call items_info_pr_indeff.tx_secp6.enable
+		call items_info_pr_indeff.txt_secp.enable
+		call items_info_pr_indeff.ed_secp1.enable
+		call items_info_pr_indeff.ed_secp2.enable
+		call items_info_pr_indeff.ed_secp3.enable
+		call items_info_pr_indeff.ed_secp4.enable
+		call items_info_pr_indeff.ed_secp5.enable
+		call items_info_pr_indeff.ed_secp6.enable
+		call items_info_pr_indeff.txt_pr.enable
+		call items_info_pr_indeff.ed_pr1.enable
+		call items_info_pr_indeff.ed_pr2.enable
+		call items_info_pr_indeff.ed_pr3.enable
+		call items_info_pr_indeff.ed_pr4.enable
+		call items_info_pr_indeff.ed_pr5.enable
+		call items_info_pr_indeff.ed_pr6.enable
+		call items_info_pr_indeff.chk_per11.enable
+		call items_info_pr_indeff.tx_items.enable
+		call items_info_pr_indeff.ed_items.enable
+		call items_info_pr_indeff.tx_fra.enable
+		call items_info_pr_indeff.var_sn.enable
+		call items_info_pr_indeff.tx_fr2.enable
+		call items_info_pr_indeff.var_item.enable
+		call items_info_pr_indeff.tx_in3.enable
+		call items_info_pr_indeff.var_elas1.enable
+		call items_info_pr_indeff.tx_ms.enable
+		call items_info_pr_indeff.var_ms.enable	
+		call items_info_pr_indeff.allind.enable
+
+         	if (has_cond11 ){
+		
+	call items_info_pr_indeff.cb_ioap_sh.enable
+	call items_info_pr_indeff.cb_ioap_ad.enable
+
+	}
+
+	if (has_cond22){
+
+	call items_info_pr_indeff.cb_ioap_sh.disable
+	call items_info_pr_indeff.cb_ioap_ad.disable
+	call items_info_pr_indeff.cb_ioap_sh.setvalue 2
+	call items_info_pr_indeff.cb_ioap_ad.setvalue 2
+
+	}
+
+
+		
+        has_shock1.setrue
+			
+        }
+		
+	 if !items_info_pr_indeff.chk_per21 {
+	 	
+	 	call items_info_pr_indeff.tx_ap_ini.disable	
+		call items_info_pr_indeff.iogr.disable
+		call items_info_pr_indeff.cb_ioap.disable
+		call items_info_pr_indeff.tx_ap_ini_sh.disable
+		call items_info_pr_indeff.cb_ioap_sh.disable
+		call items_info_pr_indeff.cb_ioap_ad.disable
+		call items_info_pr_indeff.tx_ap_ini_ad.disable
+		call items_info_pr_indeff.cb_ioap_ad.disable
+		call items_info_pr_indeff.tx_np.disable
+		call items_info_pr_indeff.ed_np.disable
+		call items_info_pr_indeff.chk_per22.disable
+		call items_info_pr_indeff.tx_dbsfile.disable
+		call items_info_pr_indeff.dbiom.disable
+		call items_info_pr_indeff.tx_nshocks.disable
+		call items_info_pr_indeff.cb_nshocks.disable
+		call items_info_pr_indeff.tx_secp1.disable
+		call items_info_pr_indeff.tx_secp2.disable
+		call items_info_pr_indeff.tx_secp3.disable
+		call items_info_pr_indeff.tx_secp4.disable
+		call items_info_pr_indeff.tx_secp5.disable
+		call items_info_pr_indeff.tx_secp6.disable
+		call items_info_pr_indeff.txt_secp.disable
+		call items_info_pr_indeff.ed_secp1.disable
+		call items_info_pr_indeff.ed_secp2.disable
+		call items_info_pr_indeff.ed_secp3.disable
+		call items_info_pr_indeff.ed_secp4.disable
+		call items_info_pr_indeff.ed_secp5.disable
+		call items_info_pr_indeff.ed_secp6.disable
+		call items_info_pr_indeff.txt_pr.disable
+		call items_info_pr_indeff.ed_pr1.disable
+		call items_info_pr_indeff.ed_pr2.disable
+		call items_info_pr_indeff.ed_pr3.disable
+		call items_info_pr_indeff.ed_pr4.disable
+		call items_info_pr_indeff.ed_pr5.disable
+		call items_info_pr_indeff.ed_pr6.disable
+		call items_info_pr_indeff.chk_per11.disable
+		call items_info_pr_indeff.tx_items.disable
+		call items_info_pr_indeff.ed_items.disable
+		call items_info_pr_indeff.tx_fra.disable
+		call items_info_pr_indeff.var_sn.disable
+		call items_info_pr_indeff.tx_fr2.disable
+		call items_info_pr_indeff.var_item.disable
+		call items_info_pr_indeff.tx_in3.disable
+		call items_info_pr_indeff.var_elas1.disable
+		call items_info_pr_indeff.tx_ms.disable
+		call items_info_pr_indeff.var_ms.disable
+		call items_info_pr_indeff.cb_ioap_sh.disable
+		call items_info_pr_indeff.cb_ioap_ad.disable
+		call items_info_pr_indeff.allind.disable
+	     has_shock1.setfasle   
+        }
+		
+ 
+	
+END
+
+
+SCRIPT tba_options_pr_ind_items
+BEGIN 
+        items_info_pr_indeff.tx_ap_ini.disable	
+		items_info_pr_indeff.iogr.disable
+		items_info_pr_indeff.cb_ioap.disable
+		items_info_pr_indeff.tx_ap_ini_sh.disable
+		items_info_pr_indeff.cb_ioap_sh.disable
+	    items_info_pr_indeff.cb_ioap_ad.disable
+		items_info_pr_indeff.tx_ap_ini_ad.disable
+		items_info_pr_indeff.cb_ioap_ad.disable
+		items_info_pr_indeff.tx_np.disable
+		items_info_pr_indeff.ed_np.disable
+		items_info_pr_indeff.chk_per22.disable
+		items_info_pr_indeff.tx_dbsfile.disable
+		items_info_pr_indeff.dbiom.disable
+		items_info_pr_indeff.tx_nshocks.disable
+		items_info_pr_indeff.cb_nshocks.disable
+		items_info_pr_indeff.tx_secp1.disable
+		items_info_pr_indeff.tx_secp2.disable
+		items_info_pr_indeff.tx_secp3.disable
+		items_info_pr_indeff.tx_secp4.disable
+		items_info_pr_indeff.tx_secp5.disable
+		items_info_pr_indeff.tx_secp6.disable
+		items_info_pr_indeff.txt_secp.disable
+		items_info_pr_indeff.ed_secp1.disable
+		items_info_pr_indeff.ed_secp2.disable
+		items_info_pr_indeff.ed_secp3.disable
+		items_info_pr_indeff.ed_secp4.disable
+		items_info_pr_indeff.ed_secp5.disable
+		items_info_pr_indeff.ed_secp6.disable
+		items_info_pr_indeff.txt_pr.disable
+		items_info_pr_indeff.ed_pr1.disable
+		items_info_pr_indeff.ed_pr2.disable
+		items_info_pr_indeff.ed_pr3.disable
+		items_info_pr_indeff.ed_pr4.disable
+		items_info_pr_indeff.ed_pr5.disable
+		items_info_pr_indeff.ed_pr6.disable
+		items_info_pr_indeff.chk_per11.disable
+		items_info_pr_indeff.tx_items.disable
+		items_info_pr_indeff.ed_items.disable
+		items_info_pr_indeff.tx_fra.disable
+		items_info_pr_indeff.var_sn.disable
+		items_info_pr_indeff.tx_fr2.disable
+		items_info_pr_indeff.var_item.disable
+		items_info_pr_indeff.tx_in3.disable
+		items_info_pr_indeff.var_elas1.disable
+		items_info_pr_indeff.tx_ms.disable
+		items_info_pr_indeff.var_ms.disable
+		items_info_pr_indeff.allind.disable
+	
+		
+	       
+END
+
+
+
+PROGRAM ivar_output
+BEGIN
+
+      optionarg items_info_pr_indeff.var_sn 
+      optionarg items_info_pr_indeff.var_item
+      optionarg items_info_pr_indeff.var_elas1
+      optionarg items_info_pr_indeff.var_ms
+      optionarg items_info_pr_indeff.ed_items
+                                                                                                   
+END
+
+
+LIST comb_appr_val
+BEGIN
+	1
+	2
+END
+
+
+LIST comb_appr_sh_ini
+BEGIN
+	Exogenous  model 
+	Endogenous model
+END
+
+LIST comb_appr_sh_val
+BEGIN
+	1
+	2
+END
+
+
+LIST comb_appr_ad_ini
+BEGIN
+	Short term  
+	Long  term
+END
+
+LIST comb_appr_ad_val
+BEGIN
+	1
+	2
+END
+
+
+LIST comb_appr_ini
+BEGIN
+	M1: Cost push prices
+	M2: Marginal profit push prices
+END
+
+
+LIST cond2_change
+BEGIN
+        script cond11
+        script cond22
+END
+
+
+SCRIPT cond11
+BEGIN
+        has_cond11.settrue
+        has_cond22.setfalse
+        program check2_conds2
+		program ptba_options_pr_ind_items
+END
+
+SCRIPT cond22
+BEGIN
+        has_cond11.setfalse
+        has_cond22.settrue
+        program check2_conds2
+		program ptba_options_pr_ind_items
+END
+
+
+
+PROGRAM check2_conds2
+BEGIN
+
+if (has_cond11 &  items_info_pr_indeff.chk_per21){
+	
+call items_info_pr_indeff.cb_ioap_sh.enable
+call items_info_pr_indeff.cb_ioap_ad.enable
+
+}
+
+if (has_cond22 |  !items_info_pr_indeff.chk_per21){
+
+call items_info_pr_indeff.cb_ioap_sh.disable
+call items_info_pr_indeff.cb_ioap_ad.disable
+call items_info_pr_indeff.cb_ioap_sh.setvalue 2
+call items_info_pr_indeff.cb_ioap_ad.setvalue 2
+
+}
+END
+
+
+
+
+LIST shock_contents
+BEGIN
+        1
+        2
+        3
+		4
+		5
+		6
+END
+
+
+LIST shock_change
+BEGIN
+        script shock1
+        script shock2
+        script shock3
+        script shock4
+        script shock5
+        script shock6
+
+END
+
+LIST shock_adjust
+BEGIN
+        script adjust1
+        script adjust2
+END
+
+
+SCRIPT adjust1
+BEGIN
+        has_add2.setfalse
+		has_add1.settrue
+        program check_peri
+END
+
+SCRIPT adjust2
+BEGIN
+        has_add1.setfalse
+        has_add2.settrue
+        program check_peri
+END
+
+
+PROGRAM  check_peri
+BEGIN
+
+if has_add1 {           
+         call items_info_pr_indeff.tx_np.show
+         call items_info_pr_indeff.ed_np.show    
+             }     
+if has_add2 {          
+         call items_info_pr_indeff.tx_np.hide
+         call items_info_pr_indeff.ed_np.hide
+              } 
+			   
+END
+
+SCRIPT shock1
+BEGIN
+        has_shock1.settrue
+        has_shock2.setfalse
+        has_shock3.setfalse
+        has_shock4.setfalse
+        has_shock5.setfalse
+        has_shock6.setfalse
+        program check_nshocks
+END
+
+
+
+SCRIPT shock2
+BEGIN
+        has_shock1.settrue
+        has_shock2.settrue
+        has_shock3.setfalse
+        has_shock4.setfalse
+        has_shock5.setfalse
+        has_shock6.setfalse
+        program check_nshocks
+END
+
+SCRIPT shock3
+BEGIN
+        has_shock1.settrue
+        has_shock2.settrue
+        has_shock3.settrue
+        has_shock4.setfalse
+        has_shock5.setfalse
+        has_shock6.setfalse
+        program check_nshocks
+END
+
+SCRIPT shock4
+BEGIN
+        has_shock1.settrue
+        has_shock2.settrue
+        has_shock3.settrue
+        has_shock4.settrue
+        has_shock5.setfalse
+        has_shock6.setfalse
+        program check_nshocks
+
+END
+
+
+SCRIPT shock5
+BEGIN
+        has_shock1.settrue
+        has_shock2.settrue
+        has_shock3.settrue
+        has_shock4.settrue
+        has_shock5.settrue
+        has_shock6.setfalse
+        program check_nshocks
+
+END
+
+
+SCRIPT shock6
+BEGIN
+        has_shock1.settrue
+        has_shock2.settrue
+        has_shock3.settrue
+        has_shock4.settrue
+        has_shock5.settrue
+        has_shock6.settrue
+        program check_nshocks
+
+END
+
+/*
+SCRIPT pos1
+BEGIN
+items_info_pr_indeff.tx_sz.setposition 300 200 . .
+END
+*/
+
+
+PROGRAM check_nshocks
+BEGIN
+         
+         if has_shock2 {
+               
+                call items_info_pr_indeff.tx_secp2.show
+				call items_info_pr_indeff.ed_secp2.show
+				call items_info_pr_indeff.ed_pr2.show    
+        }
+
+if !has_shock2  {
+                call items_info_pr_indeff.tx_secp2.hide
+				call items_info_pr_indeff.ed_secp2.hide
+				call items_info_pr_indeff.ed_pr2.hide
+			
+        }
+		
+		    if has_shock3 {
+               
+                call items_info_pr_indeff.tx_secp3.show
+				call items_info_pr_indeff.ed_secp3.show
+				call items_info_pr_indeff.ed_pr3.show    
+        }
+
+if !has_shock3  {
+                call items_info_pr_indeff.tx_secp3.hide
+				call items_info_pr_indeff.ed_secp3.hide
+				call items_info_pr_indeff.ed_pr3.hide
+			
+        }
+ 
+     if has_shock4 {
+               
+                call items_info_pr_indeff.tx_secp4.show
+				call items_info_pr_indeff.ed_secp4.show
+				call items_info_pr_indeff.ed_pr4.show    
+        }
+
+if !has_shock4  {
+                call items_info_pr_indeff.tx_secp4.hide
+				call items_info_pr_indeff.ed_secp4.hide
+				call items_info_pr_indeff.ed_pr4.hide
+			
+        }
+		
+		    if has_shock5 {
+               
+                call items_info_pr_indeff.tx_secp5.show
+				call items_info_pr_indeff.ed_secp5.show
+				call items_info_pr_indeff.ed_pr5.show    
+        }
+
+if !has_shock5  {
+                call items_info_pr_indeff.tx_secp5.hide
+				call items_info_pr_indeff.ed_secp5.hide
+				call items_info_pr_indeff.ed_pr5.hide
+			
+        }
+ 
+     if has_shock6 {
+               
+                call items_info_pr_indeff.tx_secp6.show
+				call items_info_pr_indeff.ed_secp6.show
+				call items_info_pr_indeff.ed_pr6.show    
+        }
+
+if !has_shock6  {
+                call items_info_pr_indeff.tx_secp6.hide
+				call items_info_pr_indeff.ed_secp6.hide
+				call items_info_pr_indeff.ed_pr6.hide
+			
+        }
+		
+
+ 
+END
+
+
+
+PROGRAM shock1_output
+BEGIN
+ if ( has_shock1 & items_info_pr_indeff.chk_per21) {
+                                
+                     put " shock1(" 
+					 optionarg items_info_pr_indeff.ed_secp1
+					 optionarg items_info_pr_indeff.ed_pr1
+					 put ")"
+}
+END
+
+PROGRAM shock2_output
+BEGIN
+        if has_shock2 {
+                     put " shock2(" 
+					 optionarg items_info_pr_indeff.ed_secp2
+					 optionarg items_info_pr_indeff.ed_pr2
+					 put ")"
+					 }
+END
+
+PROGRAM shock3_output
+BEGIN
+        if has_shock3 {
+		            
+                     put " shock3(" 
+					 optionarg items_info_pr_indeff.ed_secp3
+					 optionarg items_info_pr_indeff.ed_pr3
+					 put ")"
+        }
+END
+
+PROGRAM shock4_output
+BEGIN
+        if has_shock4 {
+                     put " shock4(" 
+					 optionarg items_info_pr_indeff.ed_secp4
+					 optionarg items_info_pr_indeff.ed_pr4
+					 put ")"
+        }
+END
+
+PROGRAM shock5_output
+BEGIN
+       if has_shock5 {
+                     put " shock5(" 
+					 optionarg items_info_pr_indeff.ed_secp5
+					 optionarg items_info_pr_indeff.ed_pr5
+					 put ")"
+        }
+END
+
+PROGRAM shock6_output
+BEGIN
+       if has_shock6 {
+                     put " shock6(" 
+					 optionarg items_info_pr_indeff.ed_secp6
+					 optionarg items_info_pr_indeff.ed_pr6
+					 put ")"
+        }
+END
+
+
+
+
+
+
+
+

@@ -1,0 +1,219 @@
+
+
+
+
+VERSION 14.0
+SYNCHRONOUS_ONLY 
+
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 790 380
+DIALOG main, label(" WELCOM| Price Elasticity | AIDS/QUAIDS models --> wquaids command") tabtitle("Main")
+
+BEGIN
+
+   GROUPBOX chk_per11  10    10  380 80,                         ///
+            label("Dialog box inputs: ")           ///
+                   
+    TEXT txt_vname11     20    +20    140      .,                 ///  
+                  label("Load the inputs:   ")                           
+       
+    BUTTON  bu_load    140    @     240      .,                 ///
+    label("Load") onpush("view dialog wquaids_db_ini") 
+         
+         
+   TEXT  tx_dbsfile     20    +25    140      .,                 ///  
+         label("Save the inputs:")                                
+   
+   FILE  dbsamex      140    @     240      .,                    ///
+    label ("Browse...")    save option("inisave")                   ///
+    filter("MetaFile (*.wquaids)*.wquaids*.* (*.*)*.*")   
+
+
+ GROUPBOX intvar 10     +40    380  230,                      ///
+             label("Variables of the model")
+  
+TEXT   tx_share      20      +25   220   .,                      ///
+        label("Expenditure shares*:")
+  
+ VARLIST name_items   20      +20   360       .,                      ///
+        label("") 
+  
+ TEXT   tx_price      20      +25   220   .,                      ///
+        label("Prices*:")
+		
+  
+ VARLIST name_prices   20      +20   360       .,                      ///
+        label("") option(prices)
+		
+
+ TEXT   tx_sitems      20      +25   220   .,                      ///
+        label("Short names of items:")
+		
+  
+  EDIT name_snames   20      +20   360       .,                      ///
+        label("") option(snames)
+		
+		
+   TEXT tx_hhexp      20      +30   140   .,                      ///
+        label("HH expenditures*:")
+		
+   VARNAME vn_hhexp   150      @   230       .,                      ///
+        label("") option(expend)
+		
+    TEXT tx_hhwe      20      +30   140   .,                      ///
+        label("Household weight:")
+		
+   VARNAME vn_hhwe   150      @   230       .,                      ///
+        label("")	option(hweight)	
+ 
+  
+  
+  GROUPBOX percentile 400    10    380 80,                      ///
+           label("The model/parameter(s)")
+           
+  
+  COMBOBOX  cb_model      410    +20     360      .,                 ///
+              dropdownlist                                          ///
+              contents(cb_mod)  values(cb_mod_val) option(model)  ///
+            default(1)
+   
+  TEXT   tx_paraa      410     +30   260   .,                      ///
+        label("Value to use for alpha_0 parameter:")
+  
+  EDIT   ed_al0   640      @   60       .,   ///
+  option(anot) default(10)
+  
+  
+  
+  GROUPBOX ointvar 400     110    380  80,                      ///
+             label("Other explanatory variables of the model")
+			 
+  TEXT   tx_inddemo      410     +30   260   .,                      ///
+        label("Demographic variables:")
+  
+  VARLIST vl_inddemo   410      +20   360       .,   ///
+  option(demographics)
+  
+ 
+	/*
+     GROUPBOX sample 410     10    360  140,                      ///
+             label("Other explanatory variables of the model")
+		*/	 
+   DEFINE _x 20
+   DEFINE _y 240
+   
+     TEXT tx_Note      20      +190   250   .,                      ///
+        label("Note(s): the (*) indicates a required information.")
+     
+
+
+
+END
+
+
+
+LIST cb_mod
+BEGIN
+  Quadratic Almost Ideal Demand System (Banks et al. (1994))
+  Almost Ideal Demand System (Deaton & Muellbauer    (1980))
+END
+
+LIST cb_mod_val
+BEGIN
+ 1
+ 2
+END
+
+
+
+DIALOG resop,  tabtitle("Results")
+
+BEGIN
+                                        
+SPINNER  sp_dec    10       25      50    .,                    /*
+                */ label("Decimals")                            /*
+                */ min(0) default(3) max(12)                            /*
+                */ option(dec)
+
+TEXT     sp_txt  70      25      140      .,                            /*
+                */ label("Number of decimals")  
+
+                                
+  CHECKBOX ck_dregres 10     +40    200  .,                           /*
+                */ label("Display regression results")               /*
+                */ option("dregres")                                 /*
+                */
+
+ CHECKBOX ck_dislas 10     +40    200  .,                           /*
+                */ label("Display the results of the last item")               /*
+                */ option("dislas")  default(1)                                 /*
+                */
+
+  TEXT  tx_eldecfile     10    +60    140      .,                 ///  
+  label("Save the elasticity file:") 
+  FILE  eldecfile      140   @     270      .,                    ///
+  label ("Browse...")    save option("xfil")                   ///
+  filter("MetaFile (*.xml)*.xml*.* (*.*)*.*")
+                                
+                                
+END
+
+
+
+SCRIPT PREINIT
+BEGIN
+create BOOLEAN has_ini                         
+END
+
+
+PROGRAM POSTINIT_PROGRAM
+BEGIN
+        put "awquaids2"
+        stata hidden
+END
+
+
+
+HELP hlp1,   view("help wquaids")
+RESET res1
+OK      ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY  copy1,
+
+PROGRAM command
+BEGIN
+        put "xi: wquaids "
+        require  main.name_items
+        varlist [main.name_items]
+      
+
+        beginoptions  
+        put " "
+		optionarg main.ed_al0 
+        optionarg main.name_prices
+		optionarg main.name_snames
+		
+		optionarg main.vn_hhexp
+		optionarg main.vn_hhwe
+		optionarg main.cb_model
+		
+        
+		optionarg main.dbsamex
+		
+        optionarg main.vl_inddemo
+		
+                        if !resop.sp_dec.isdefault() {
+                        optionarg resop.sp_dec
+                        }
+                optionarg resop.ck_dregres
+				optionarg resop.ck_dislas
+                optionarg resop.eldecfile
+
+                                        
+        endoptions
+        
+        
+        
+END

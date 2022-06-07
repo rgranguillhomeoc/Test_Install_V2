@@ -1,0 +1,75 @@
+* OCT2021 - 
+v 3
+d {bf:WELCOM   : WELfare and COMpetition}
+d Version       : Version           3.60   
+d Date          : October           2021
+d Stata Version : Required  14.0 and higher
+d
+d WELCOM is a product of the World Bank.
+d
+d Authors : {bf:Abdelkrim Araar(a)}  {bf:Eduardo Malasquez (b)} {bf:Sergio Olivieri(c)}  {bf:Carlos Rodriguez-Castelan (d)} 
+d
+d Emails  :  
+d           (a) {browse "mailto:aabd@ecn.ulaval.ca":aabd@ecn.ulaval.ca}  
+d           (b) {browse "mailto:emalasquez@worldbank.org":emalasquez@worldbank.org}
+d           (c) {browse "mailto:solivieri@worldbank.org":solivieri@worldbank.org}   
+d           (d) {browse "mailto:crodriguezc@worldbank.org":crodriguezc@worldbank.org}
+d 
+d Website : {browse "http://dasp.ecn.ulaval.ca/welcom/mi/":http://dasp.ecn.ulaval.ca/welcom/mi/}
+d
+f files/main/aprini2_pr.ado
+f files/main/aprini_pr.ado 
+f files/main/aprini_pr.dlg 
+f files/main/asdbsave_prw.ado  
+f files/main/extend_opt_item_pr.ado
+f files/main/items_info_pr.idlg
+f files/main/jtables_pr.sthlp  
+f files/main/prcwel.ado
+f files/main/prcwel.dlg
+f files/main/prcwel.sthlp  
+f files/main/prjob11.ado 
+f files/main/prjob41.ado   
+f files/main/prjob42.ado   
+f files/main/prjob43.ado   
+f files/main/prjob44.ado   
+f files/main/prjob51.ado   
+f files/main/prjob51b.ado  
+f files/main/prjob52.ado   
+f files/main/prjob53.ado   
+f files/main/prjob61.ado   
+f files/main/prjob62.ado   
+f files/main/prjob63.ado   
+f files/main/prjob64.ado   
+f files/main/prjobatkinson.ado 
+f files/main/prjobentropy.ado  
+f files/main/prjobgini.ado 
+f files/main/prjobpov.ado  
+f files/main/prjobratio.ado
+f files/main/prjobstat.ado 
+f files/main/tb_options_pr.idlg
+f files/main/tabtit.ado
+f files/main/aprini2d_pr.ado   
+f files/main/aprini2_pr.ado    
+f files/main/aprinid_pr.ado    
+f files/main/aprini_pr.ado     
+f files/main/asdbsave_prw.ado  
+f files/main/asdbsave_prw_ind.ado
+f files/main/extend_opt_shocks.ado
+f files/main/pciomf_ind.ado    
+f files/main/prcwel_ind.ado    
+f files/main/prijob2a.ado      
+f files/main/prijob3a.ado      
+f files/main/prijob4a.ado      
+f files/main/prijob5a.ado      
+f files/main/prijob6a.ado      
+f files/main/prjob11.ado       
+f files/main/aprinid_pr.dlg    
+f files/main/items_info_pr.idlg
+f files/main/items_info_pr_ind.idlg
+f files/main/items_info_pr_indeff.idlg
+f files/main/prcwel_ind.dlg    
+f files/main/tb_options_pr_ind.idlg
+f files/main/prcwel_ind.sthlp  
+f files/main/hotdeck.ado      
+f files/main/hotdeck6.ado
+

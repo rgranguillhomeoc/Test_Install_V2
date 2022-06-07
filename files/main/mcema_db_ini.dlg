@@ -1,0 +1,33 @@
+VERSION 9.2
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 560 100
+
+
+DIALOG main, label("Initialise the dialog box of the  command: mcema") tabtitle("Main")
+
+  
+BEGIN
+  TEXT     tx_using      20     20     200        .,       ///
+        label("Filename of mcema dialog box inputs:")
+
+        FILE  fnamex      220    @     280      .,    ///
+        label ("Browse...")    save                    ///
+        filter("MetaFile (*.mcema)|*.mcema|*.* (*.*)|*.*")  
+  
+END
+
+
+HELP hlp1,   view("help mcema_db_ini")
+RESET res1
+OK ok1,      label("OK")
+CANCEL can1, label("Cancel")
+COPY copy1
+
+PROGRAM command
+BEGIN
+        require main.fnamex
+		put "mcema_db_ini"
+		put `"""' main.fnamex `"""'
+        
+END

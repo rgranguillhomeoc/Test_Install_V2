@@ -1,0 +1,912 @@
+VERSION 14.0 
+SYNCHRONOUS_ONLY 
+
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 760 740
+
+
+DIALOG main, label(" WELCOM| Market Competition and the Extensive Margin Analysis --> mcema command") tabtitle("Main")
+
+BEGIN
+
+ GROUPBOX intvar 10     10    740  260,                      ///
+             label("Probabilistic model of (positive) consumption")
+  TEXT   tx_d_cons      20      25   120   .,                      ///
+        label("Consump. dummy:*")
+  
+  VARNAME vn_d_cons   20      45   100       .,                      ///
+        label("") 
+                
+  TEXT tx_pr      140      25   90   .,                      ///
+        label("Price:")
+  
+  VARNAME vn_pr   140      45   90       .,                      ///
+        label("")  option(price)
+
+ TEXT tx_hhs      240      25   90   .,                      ///
+        label("Household size:*")
+  
+  VARNAME vn_hhs   240      45   90       .,                      ///
+        label("")  option(hsize)		
+		
+TEXT tx_inc      340      25   100   .,                      ///
+        label("Per cap. welfare:*")
+  
+  VARNAME vn_inc   340      45   90       .,                      ///
+        label("")  option(welfare)
+		
+		
+   TEXT tx_hg      440      25   100   .,                      ///
+        label("Household group:")
+  
+  VARNAME vn_hg   440      45   90       .,                      ///
+        label("") 	option(hgroup)	
+		
+   TEXT tx_incpar      550      25   100   .,                      ///
+        label("Quintile/Decile:")
+  
+  VARNAME vn_incpar   550      45   90       .,                      ///
+        label("") 	option(incpar)	
+		
+   TEXT tx_pline      650      25   90   .,                      ///
+        label("Poverty line:*")
+  
+  VARNAME vn_pline   650      45   90       .,                      ///
+        label("") 	option(pline)			
+		
+   
+  TEXT   tx_indcat      20     +30   260   .,                      ///
+        label("Other categorical independent variables:")
+  
+  VARLIST vl_indcat   20      +20   390       .,   ///
+  option(indcat)
+  
+   TEXT   tx_indcon      20     +20   260   .,                      ///
+  label("Other continuous independent variables:")
+  
+                               /*
+                */
+  VARLIST vl_indcon   20      +20   390       .,    ///
+    option(indcon)
+   
+   
+  CHECKBOX ck_swp 20     +30    300  .,                           /*
+                */ label("Use a variable selection filter with a significance level:")               /*
+                */ option("swp") default(0) onclickon(program ptb_options_t_change)   onclickoff(script  tb_options_t_change) 
+
+  
+  EDIT   fl_pswp 330     @    60  .,                           /*
+                */ option("pswp") default(0.1)				
+  
+  TEXT   tx_com_um    35  +25   270   .,                      ///
+         label(" Predict the probabilities with the model:")
+  
+  
+  COMBOBOX com_um    290     @    100  .,                           ///
+           dropdownlist                                         ///
+            contents(cb_um)  values(cb_um_val) option(um)       ///
+            default(1)  
+
+   TEXT   tx_d_ma1      300     +25   50   .,                      ///
+         label(" Regions:")
+   
+   TEXT   tx_d_ma3      380     @   50   .,                      ///
+         label(" Eligible:")		 
+		 
+   CHECKBOX ck_mac 20     +20    280  .,                           /*
+                */ label("Use exogenous number of total users/entrants:")               /*
+                */ option("exnum") default(0) onclickon(program ptb_options_mac_change)  /*
+				*/ onclickoff(program ptb_options_mac_change) 
+
+  
+ 
+   
+   VARNAME      gr_mac 300       @   70  .,                           /*
+                */ option("grmac") 
+   
+   VARNAME      eli_mac 380       @   70  .,                           /*
+                */ option("eligible") 
+				
+   TEXT   tx_d_ma2      460      @   90   .,                      ///
+         label("Total number of:")
+   
+     COMBOBOX  cb_mac      550     @     70      .,                  ///
+        dropdownlist     onselchangelist(cond_mac_change)             ///
+            contents(cb_mac)  values(cb_mac_val)      ///
+            default(1)
+   
+   
+   VARNAME   var_tent 630     @    70  .,                           /*
+                */ option("totentr")	
+				
+   VARNAME   var_tuse 630     @    70  .,                           /*
+                */ option("totuser")					
+				
+   
+  GROUPBOX intvarc 10     +45    740  300,                      ///
+             label("Prediction of expenditures")
+		 
+  TEXT   tx_d_consc      20      +30   90   .,                      ///
+         label("Expenditure:*")
+
+  VARNAME vn_d_consc     100       @   120       .,                      ///
+        label("")  option(pccons)
+
+ TEXT   tx_seed      380        +20   90   .,                      ///
+         label("Seed:")	
+		 
+ TEXT   tx_moda3      480        @   90   .,                      ///
+         label("# of quantiles:")				
+			
+ TEXT   tx_moda2      570       @   220   .,                      ///
+         label("Estimate by population group(s):")		
+	
+  TEXT   tx_model      20      +20   90   .,                      ///
+         label("Imputation:")
+
+ COMBOBOX  cb_moda      100     @     260      .,                    ///
+            dropdownlist     onselchangelist( hcond_change )                                          ///
+            contents(cb_model)  values(cb_model_val) option(expmod)     ///
+            default(1) 
+  EDIT  ed_seed      380     @     80      .,                  ///
+                  option(seed) default(123456)
+				  
+  EDIT  ed_modaq1      480     @     80      .,                  ///
+                  option(nquantile) default(20)
+			
+		 
+  VARNAME gr_moda1      570     @     80      .,                  ///
+                  option(grmod1)	
+				  
+  VARNAME gr_moda2      660     @     80      .,                  ///
+                  option(grmod2)					  
+
+	
+  
+   TEXT tx_all      20       +45   250   .,                      ///
+        label("Indicate the functional of the variables:*")	
+   TEXT tx_inccons      460      @   120   .,                      ///
+        label("Other options:")			
+		
+  TEXT tx_cons      20       +15   120   .,                      ///
+        label("Expenditures:*")	
+		
+  TEXT tx_prc      160      @   120   .,                      ///
+        label("Price:")
+  
+  
+  TEXT tx_incc      300      @   120   .,                      ///
+        label("Per capita welfare:*")	
+		
+ 
+  COMBOBOX  cb_cons      20     +20     120      .,                  ///
+            dropdownlist                                          ///
+            contents(cb_fex)  values(cb_fex_val) option(fex)     ///
+            default(1) 
+
+ COMBOBOX  cb_cpri      160    @     120      .,                  ///
+            dropdownlist                                          ///
+            contents(cb_fpr)  values(cb_fpr_val) option(fpr)     ///
+            default(1) 
+			
+ COMBOBOX  cb_cinc      300    @     120      .,                  ///
+            dropdownlist                                          ///
+            contents(cb_fin)  values(cb_fin_val) option(fin)     ///
+            default(1) 
+			
+  EDIT  ed_oopt       460    @     220      .,                  ///
+             option(oopt)   default()  
+         				
+		
+  TEXT   tx_indcatc      20     +30   260   .,                      ///
+        label("Categorical independant variables:")
+  
+  VARLIST vl_indcatc   20      +20   390       .,   ///
+  option(cindcat)
+  
+   TEXT   tx_indconc      20     +20   260   .,                      ///
+  label("Continuous independant variables:")
+                                /*
+                */
+  VARLIST vl_indconc    20      +20   390       .,    ///
+    option(cindcon)
+    
+
+   
+   
+   CHECKBOX ck_swe 20     +30    300  .,                           /*
+                */ label("Stepwise filter with significance level:")               /*
+                */ option(swe) default(0) onclickon(program ptb_options_t_changee)   onclickoff(script  tb_options_t_changee) 
+
+  
+  EDIT   fl_pswe 280     @    60  .,                           /*
+                */ option("pswe") default(0.1)	
+ 
+ 
+ 
+ GROUPBOX intvar2     10     580    740  80,                      ///
+             label("Change in price -income-")
+  
+  
+  TEXT   tx_prchange      20     +20   150   .,          ///
+  label("Price change:")
+ 
+ VARNAME  vn_pchange        180      @   120       .,            ///
+        label("") 	option(pchange)	
+
+ TEXT   tx_ichange      20     +30   150   .,                      ///
+ label("Equivalent income change:")		
+ 
+ VARNAME vn_ichange    180      @   120       .,                      ///
+        label("") 	option(ichange)	
+	
+	
+	
+ CHECKBOX ck_adj 330     @    260  .,                           /*
+                */ label("Adjust the impact based on expenditure shares:")               /*
+                */ option(adjs) default(0) onclickon(program ptb_options_t_changed)   onclickoff(script  tb_options_t_changed) 
+
+  
+ VARNAME   vn_share 600     @    90  .,                           /*
+                */ option("expshare") 	
+ 	
+		
+
+		
+ GROUPBOX chk_per11  10    660  380 80,                         ///
+            label("Dialog box inputs: ")           ///
+                   
+    TEXT txt_vname11     20    +20    140      .,                 ///  
+                  label("Load the inputs:   ")                           
+       
+    BUTTON  bu_load    140    @     240      .,                 ///
+    label("Load") onpush("view dialog mcema_db_ini") 
+         
+         
+   TEXT  tx_dbsfile    20    +25    110      .,                 ///  
+         label("Save the inputs:")                                
+   
+   FILE  dbsamex      140    @     240      .,                    ///
+    label ("Browse...")    save option("inisave")                   ///
+    filter("MetaFile (*.mcema)*.mcema*.* (*.*)*.*")   
+ 
+		
+   
+   DEFINE _x 540
+   DEFINE _y 670
+     
+  INCLUDE _bu_svyset
+
+END
+
+
+LIST cb_fpr
+BEGIN
+ Price
+ Log(price)
+ Do not use it
+END
+
+LIST cb_fpr_val
+BEGIN
+1
+2
+3
+END
+
+
+LIST cb_mac
+BEGIN
+ entrants
+ users
+END
+
+LIST cb_mac_val
+BEGIN
+1
+2
+END
+
+LIST cb_fin
+BEGIN
+ Income
+ Log(income)
+ Do not use it
+END
+
+LIST cb_fin_val
+BEGIN
+1
+2
+3
+END
+
+
+LIST cb_fex
+BEGIN
+ Expenditure
+ Log(Expenditure)
+END
+
+LIST cb_fex_val
+BEGIN
+1
+2
+END
+
+
+
+
+
+
+
+SCRIPT PREINIT
+BEGIN
+create BOOLEAN has_ini   
+create BOOLEAN has_cond1
+create BOOLEAN has_cond2
+create BOOLEAN has_mccond1
+create BOOLEAN has_mccond2
+END
+
+PROGRAM POSTINIT_PROGRAM
+BEGIN
+        put "amcema2"
+        stata hidden
+END
+
+
+LIST hcond_change
+BEGIN
+        script hcond1
+        script hcond2
+		script hcond3
+		script hcond4
+	    script hcond5
+		script hcond6
+END
+
+
+
+SCRIPT hcond1
+BEGIN
+		program check_conds_hide
+		program check_seed_hide
+END
+
+SCRIPT hcond2
+BEGIN
+		program check_conds_hide
+		program check_seed_show
+END
+
+SCRIPT hcond3
+BEGIN
+        program check_conds_show
+		program check_seed_hide
+END
+
+SCRIPT hcond4
+BEGIN
+        program check_conds_show
+		program check_seed_show
+		
+
+END
+
+SCRIPT hcond5
+BEGIN
+        program check_conds_showa
+		program check_seed_hide
+
+END
+
+SCRIPT hcond6
+BEGIN
+        program check_conds_showa
+		program check_seed_show
+
+END
+
+
+
+PROGRAM check_conds_show
+BEGIN
+call main.tx_cons.show     
+call main.tx_prc.show       
+call main.tx_incc.show 
+call main.tx_all.show       
+call main.tx_inccons.show       
+call main.cb_cons.show      
+call main.cb_cpri.show      
+call main.cb_cinc.show       
+call main.ed_oopt.show        
+call main.tx_indcatc.show       
+call main.vl_indcatc.show     
+call main.tx_indconc.show      
+call main.vl_indconc.show         
+call resop.var_disgr.show     
+call main.ck_swe.show   
+call main.fl_pswe.show
+call main.ed_modaq1.hide
+call main.tx_moda3.hide   
+call main.ed_seed.hide
+call main.tx_seed.hide  
+END
+
+PROGRAM check_conds_showa
+BEGIN
+call main.tx_cons.show     
+call main.tx_prc.show       
+call main.tx_incc.show 
+call main.tx_all.show       
+call main.tx_inccons.show       
+call main.cb_cons.show      
+call main.cb_cpri.show      
+call main.cb_cinc.show       
+call main.ed_oopt.show        
+call main.tx_indcatc.show       
+call main.vl_indcatc.show     
+call main.tx_indconc.show      
+call main.vl_indconc.show         
+call resop.var_disgr.show     
+call main.ck_swe.show   
+call main.fl_pswe.show
+call main.ed_modaq1.show
+call main.tx_moda3.show   
+END
+
+
+PROGRAM check_seed_hide
+BEGIN 
+call main.ed_seed.hide
+call main.tx_seed.hide  
+END
+
+
+PROGRAM check_seed_show
+BEGIN 
+call main.ed_seed.show
+call main.tx_seed.show
+END
+
+PROGRAM check_conds_hide
+BEGIN
+call main.tx_cons.hide     
+call main.tx_prc.hide       
+call main.tx_incc.hide       
+call main.tx_inccons.hide 
+call main.tx_all.hide      
+call main.cb_cons.hide      
+call main.cb_cpri.hide      
+call main.cb_cinc.hide       
+call main.ed_oopt.hide    
+call main.tx_indcatc.hide       
+call main.vl_indcatc.hide     
+call main.tx_indconc.hide      
+call main.vl_indconc.hide            
+call main.ck_swe.hide   
+call main.fl_pswe.hide
+call main.ed_modaq1.hide
+call main.tx_moda3.hide   
+END
+
+
+
+LIST cond_change
+BEGIN
+        script cond1
+        script cond2
+END
+
+SCRIPT cond1
+BEGIN
+        has_cond1.settrue
+        has_cond2.setfalse
+        program check_conds
+END
+
+SCRIPT cond2
+BEGIN
+        has_cond1.setfalse
+        has_cond2.settrue
+        program check_conds
+END
+
+
+
+PROGRAM check_conds
+BEGIN
+
+if (has_cond1){
+call main.ck_adj.hide
+call main.vn_share.hide
+}
+
+
+if (has_cond2){
+call main.ck_adj.show
+call main.vn_share.show
+}
+
+END
+
+
+
+LIST cond_mac_change
+BEGIN
+        script mccond1
+        script mccond2
+		
+END
+
+SCRIPT mccond1
+BEGIN
+        has_mccond1.settrue
+        has_mccond2.setfalse
+        program check_mcconds
+END
+
+SCRIPT mccond2
+BEGIN
+        has_mccond1.setfalse
+        has_mccond2.settrue
+        program check_mcconds
+		
+END
+
+
+
+PROGRAM check_mcconds
+BEGIN
+
+if (has_mccond1){
+call main.var_tent.show
+call main.var_tuse.hide
+}
+
+
+if (has_mccond2){
+call main.var_tent.hide
+call main.var_tuse.show
+}
+program ptb_options_mac_change
+END
+
+
+
+
+
+ 
+
+DIALOG resop,  tabtitle("Results")
+
+BEGIN
+                                        
+SPINNER  sp_dec    20       25      50    .,                    /*
+                */ label("Decimals")                            /*
+                */ min(0) default(4) max(12)                            /*
+                */ option(dec)
+
+TEXT     sp_txt  80      25      200      .,                            /*
+                */ label("Number of decimals")  
+
+				
+  CHECKBOX ck_dregres 20     +35    300  .,                           /*
+                */ label("Display regression results")               /*
+                */ option(dreg)  default(0)                               /*
+                */
+
+TEXT   tx_estexp      20     +35    260   .,                      ///
+  label("      Display the results by population groups:")
+  
+  VARNAME var_disgr    280      @   130       .,    ///
+    option(disgr)				
+
+CHECKBOX ck_excel     10    +40     560    75,             ///
+        groupbox label("Excel file: Produce an Excel file of results")                 ///
+        onclickon(program ptb_options_t_excel)                      ///
+        onclickoff(script  tb_options_t_excel)    
+
+TEXT  tx_nxfile     20    +25    40      .,                 ///  
+label("File :")           
+            
+        
+FILE  fnamex      80    @     400      .,                 ///
+label ("Browse...")    save option("xfil")                   ///
+filter("MetaFile (*.xml)*.xml*.* (*.*)*.*")  
+END
+
+
+
+PROGRAM ptb_options_t_change
+BEGIN
+        if main.ck_swp {
+                        call main.fl_pswp.enable
+
+        }
+                
+        if !main.ck_swp {
+                        call main.fl_pswp.disable
+
+
+        }
+END
+
+
+SCRIPT tb_options_t_change
+BEGIN
+                main.fl_pswp.disable
+END
+
+
+
+
+
+PROGRAM ptb_options_mac_change
+BEGIN
+        if main.ck_mac {
+                        call main.tx_d_ma1.enable   
+						call main.gr_mac.enable 
+						call main.tx_d_ma3.enable   
+						call main.eli_mac.enable
+						call main.tx_d_ma2.enable     
+						call main.var_tuse.enable
+						call main.var_tent.enable
+						call main.cb_mac.enable
+						call main.tx_ichange.hide      
+						call main.vn_ichange.hide     
+						call main.ck_adj.hide    
+						call main.vn_share.hide 
+        }
+                
+        if !main.ck_mac {
+                        call main.tx_d_ma1.disable  
+						call main.gr_mac.disable
+						call main.tx_d_ma2.disable     
+						call main.var_tuse.disable
+						call main.var_tent.disable
+						call main.cb_mac.disable
+						call main.tx_d_ma3.disable   
+						call main.eli_mac.disable
+					    call main.tx_ichange.show      
+						call main.vn_ichange.show     
+						call main.ck_adj.show   
+						call main.vn_share.show 
+
+          }
+END
+
+
+
+
+
+
+PROGRAM ptb_options_t_changee
+BEGIN
+        if main.ck_swe {
+                        call main.fl_pswe.enable
+
+        }
+                
+        if !main.ck_swe {
+                        call main.fl_pswe.disable
+
+
+        }
+		
+		
+END
+
+
+SCRIPT tb_options_t_changee
+BEGIN
+                main.fl_pswe.disable
+END
+
+
+
+PROGRAM ptb_options_t_changed
+BEGIN
+        if main.ck_adj {
+                        call main.vn_share.enable
+
+        }
+                
+        if !main.ck_adj {
+                        call main.vn_share.disable
+
+        }
+		
+		
+END
+
+
+SCRIPT tb_options_t_changed
+BEGIN
+                main.vn_share.disable
+END
+
+
+
+PROGRAM ptb_options_t_excel
+BEGIN
+        if resop.ck_excel {
+                        call resop.tx_nxfile.enable
+                        call resop.fnamex.enable 
+
+        }
+                
+           if !resop.ck_excel {
+                        call resop.tx_nxfile.disable
+                        call resop.fnamex.disable 
+
+        }
+END
+
+
+SCRIPT tb_options_t_excel
+BEGIN
+                resop.tx_nxfile.disable
+                resop.fnamex.disable                
+END
+
+
+
+
+
+LIST cb_model
+BEGIN
+	Average		
+	Random imputation 		
+	Linear regression		
+	Linear regression and random imputation
+	Quantile regression 		
+	Quantile regression and random imputation 
+END
+
+LIST cb_model_val
+BEGIN
+	 1
+	 2
+	 3
+	 4
+	 5
+	 6
+END
+
+
+LIST cb_um
+BEGIN
+Model_1 (M1)
+Model_2 (M2)
+Model_3 (M3)
+Model_4 (M4)
+Model_5 (M5)
+Model_6 (M6)
+END
+
+LIST cb_um_val
+BEGIN
+	 1
+	 2
+	 3
+	 4
+	 5
+	 6
+END
+
+
+
+
+
+
+
+
+
+
+HELP hlp1,   view("help mcema")
+RESET res1
+OK ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY copy1
+
+PROGRAM command
+BEGIN
+        put "mcema "
+        require  main.vn_d_cons
+        varlist [main.vn_d_cons]
+		require  main.vn_d_consc
+        varlist [main.vn_d_consc]
+		
+        beginoptions   
+
+
+		optionarg main.cb_moda
+		optionarg main.gr_moda1
+		optionarg main.gr_moda2
+        optionarg main.vn_pr
+        optionarg main.vn_inc
+		optionarg main.vn_hhs
+        optionarg main.vn_hg 
+		optionarg main.vn_pline
+	    optionarg main.vn_incpar
+		optionarg main.vl_indcat
+		optionarg main.vl_indcon
+		
+		optionarg main.fl_pswp
+		optionarg main.fl_pswe
+		optionarg main.vn_pchange
+		optionarg main.vn_ichange
+		optionarg main.vn_share
+		
+		optionarg resop.var_disgr 
+		
+       
+	    if !main.com_um.isdefault() {
+		optionarg  main.com_um
+		}
+		
+		/*
+		if !main.ck_uinc.isdefault() {
+		optionarg  main.ck_uinc
+		}
+		*/
+                        if !resop.sp_dec.isdefault() {
+                        optionarg resop.sp_dec
+                        }
+	
+		
+		if !resop.ck_dregres.isdefault() {
+		optionarg resop.ck_dregres
+		}
+		
+	    if !main.cb_cons.isdefault(){
+		optionarg main.cb_cons
+		}
+		
+		if !main.ed_modaq1.isdefault(){
+		optionarg main.ed_modaq1
+		}
+		
+		
+		if !main.cb_cpri.isdefault(){
+		optionarg main.cb_cpri
+		}
+		
+		if !main.cb_cinc.isdefault(){
+		optionarg main.cb_cinc
+		}
+		
+	   if !main.ed_oopt.isdefault(){
+		optionarg main.ed_oopt
+		}
+		
+		   if !main.ed_seed.isdefault() {
+		optionarg  main.ed_seed
+		}
+		
+		/********************/
+		if  !main.ck_mac.isdefault(){
+	    	optionarg main.ck_mac
+			optionarg main.gr_mac
+			optionarg main.eli_mac
+			optionarg main.var_tent
+			optionarg main.var_tuse	
+		}				
+		
+		/***********************/
+        
+	    optionarg main.vl_indcatc
+		optionarg main.vl_indconc
+		optionarg main.dbsamex
+		optionarg resop.fnamex
+        
+                                            
+        endoptions
+        
+        
+        
+END

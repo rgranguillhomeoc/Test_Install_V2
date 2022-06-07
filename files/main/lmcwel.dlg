@@ -1,0 +1,424 @@
+/************************************************************************************/
+/* lmcwel: Labor Market Concentration and Welfare  (Version 3.00)                   */
+/************************************************************************************/
+/* Conceived  by Dr. Araar Abdelkrim, Sergio Olivieri and Carlos Rodriguez Castelan */
+/* World Bank and Universite Laval, Quebec, Canada                       	    */
+/* email : aabd@ecn.ulaval.ca                                            	    */
+/* Phone : 1 418 656 7507                                                	    */
+/************************************************************************************/
+/*   lmcwel.dlg                                                           	    */
+/************************************************************************************/
+
+
+
+
+VERSION 9.2
+SYNCHRONOUS_ONLY
+
+INCLUDE graph_header
+POSITION . . 860 540
+
+
+DIALOG main, label("WELCOM| Labor Market Concentration and Welfare --> lmcwel command") tabtitle("Main")
+BEGIN
+  DEFINE col0  20
+  DEFINE col1 15
+  DEFINE col2 50
+  DEFINE col3 170
+  DEFINE col4 280
+  DEFINE col5 400
+  
+  DEFINE colwd0 55
+  DEFINE colwd1 105
+  DEFINE colwd2 105
+  DEFINE colwd3 80
+  
+
+  DEFINE _x _xsetbu
+  DEFINE _y _top
+  
+   
+    GROUPBOX gr01  10    10  410 80,                         ///
+            label("Dialog box inputs: ")           ///
+		   
+    TEXT txt_vname11     20    +20    140      .,                 ///  
+                  label("Load the inputs:   ")                           
+       
+    BUTTON  bu_load    140    @     270      .,                 ///
+    label("Load") onpush("view dialog lmcwell_ini_lmc") 
+	 
+	 
+	TEXT  tx_dbsfile     20    +25    140      .,                 ///  
+         label("Save the inputs:")                           	  
+   
+   FILE  dbsamex      140    @     270      .,                    ///
+    label ("Browse...")    save option("inisave")                   ///
+    filter("MetaFile (*.lmc)*.lmc*.* (*.*)*.*")   
+                          
+
+   GROUPBOX chk_per1  10    110  410 160,                         ///
+           label("General information on sampled households: ")                       ///
+
+
+  
+ TEXT     tx_varid      20   +30    180      .,                 ///
+           label("Household identifier*:   ")  
+ VARLIST  vl_hhid     260    @     150      .,                 ///
+           option(hhid) 
+		   
+  
+  TEXT     tx_var      20    +30    180      .,                 ///
+   label("Per capita welfare*:          ") 
+         
+  VARNAME  vn_pcexp      260    @     150      .,                 ///
+                  
+  
+                   
+ TEXT     tx_var3      20   +30    180      .,                 ///
+           label("Household size*:   ")  
+ VARNAME  vn_hhs     260    @     150      .,                 ///
+           option(hsize)    
+ 
+ TEXT     tx_pl1      20   +30    180      .,                 ///
+           label("Poverty line*:   ")  
+ VARNAME  vn_pl1      260    @     150      .,                 ///
+           option(pline)    
+  
+  GROUPBOX chk_per7  10    +80  410 80,                         ///
+           label("Group variable (by default is the quintiles) ")         
+                   
+ TEXT     tx_hhg      20   +30    180       .,                 ///
+           label("Household group:   ")  
+ VARNAME  vn_hhg      260 @     150      .,                 ///
+           option(hgroup)  
+                   
+
+
+ TEXT     txt_note1     10    +60    400      .,                 ///  
+             label("Note: The (*) indicates a required information.")     
+  
+  
+ 
+ 
+
+	
+   GROUPBOX parineq 440    10    410 80,                      ///
+           label("Paremeters of inequality indices")
+
+   TEXT     txt_param1     450    +25    100      .,                 ///  
+             label("Atkinson index (epsilon):")  
+			 
+   EDIT    ed_epsilon     610    @     230     .,   ///
+   option(epsilon) default(0.5)
+   
+   TEXT     txt_param2     450    +25    100      .,                 ///  
+   label("Generalised Entropy index  (theta):")  
+			 
+   EDIT    ed_theta     610    @     230     .,   ///
+   option(theta) default(0) 
+  
+  
+ 	
+	
+
+  
+                             
+
+   DEFINE _x 40
+   DEFINE _y 450
+     
+  INCLUDE _bu_svyset
+
+END
+
+
+
+
+
+
+LIST cb_move
+BEGIN
+ Competitive to Concentrated Market
+ Concentrated to Competitive Market
+END
+
+LIST cb_move_val
+BEGIN
+ 1
+-1
+END
+
+
+
+
+
+
+
+
+
+SCRIPT PREINIT
+BEGIN
+      
+        create BOOLEAN has_str1
+        create BOOLEAN has_str2
+        create BOOLEAN has_str3
+		
+		create BOOLEAN has_sel1
+        create BOOLEAN has_sel2
+        create BOOLEAN has_sel3
+		
+	    create BOOLEAN has_mod1
+        create BOOLEAN has_mod2
+		
+		
+		
+	    create BOOLEAN has_item1
+        create BOOLEAN has_item2
+        create BOOLEAN has_item3
+        create BOOLEAN has_item4
+        create BOOLEAN has_item5
+        create BOOLEAN has_item6
+		create BOOLEAN has_item7
+        create BOOLEAN has_item8
+        create BOOLEAN has_item9
+        create BOOLEAN has_item10
+		create BOOLEAN has_ini
+
+                                
+END
+
+
+LIST str_change
+BEGIN
+        script str1
+        script str2
+		script str3
+        
+END
+
+
+SCRIPT str1
+BEGIN
+        has_str1.settrue
+        has_str2.setfalse
+		has_str3.setfalse
+        program check_strs
+END
+
+SCRIPT str2
+BEGIN
+        has_str1.setfalse
+        has_str2.settrue
+		has_str3.setfalse
+        program check_strs
+END
+
+
+SCRIPT str3
+BEGIN
+        has_str1.setfalse
+        has_str2.setfalse
+		has_str3.settrue
+        program check_strs
+END
+
+
+PROGRAM check_strs
+BEGIN
+if (has_str1){
+
+
+call main.tx_osize.hide
+call main.ed_osize.hide
+
+call main.tx_nfirms.hide
+call main.ed_nfirms.hide
+}
+
+if has_str2{
+
+
+call main.tx_osize.hide
+call main.ed_osize.hide
+
+call main.tx_nfirms.show
+call main.ed_nfirms.show
+
+}
+
+
+if has_str3{
+
+
+call main.tx_osize.show
+call main.ed_osize.show
+
+call main.tx_nfirms.hide
+call main.ed_nfirms.hide
+}
+
+END
+
+
+
+LIST sel_change
+BEGIN
+        script sel1
+        script sel2
+		script sel3
+        
+END
+
+
+SCRIPT sel1
+BEGIN
+        has_sel1.settrue
+        has_sel2.setfalse
+		has_sel3.setfalse
+        program check_sels
+END
+
+SCRIPT sel2
+BEGIN
+        has_sel1.setfalse
+        has_sel2.settrue
+		has_sel3.setfalse
+        program check_sels
+END
+
+
+SCRIPT sel3
+BEGIN
+        has_sel1.setfalse
+        has_sel2.setfalse
+		has_sel3.settrue
+        program check_sels
+END
+
+
+
+LIST mod_change
+BEGIN
+        script mod1
+        script mod2   
+END
+
+
+SCRIPT mod1
+BEGIN
+        has_mod1.settrue
+        program check_sels
+END
+
+SCRIPT mod2
+BEGIN
+        has_mod1.setfalse
+        program check_sels
+END
+
+
+PROGRAM check_sels
+BEGIN
+if (has_sel1){
+call main.txt_subs.hide    
+call main.txt_model.hide     
+call main.cb_model.hide      
+call main.ed_subs.hide 
+}
+
+if !has_sel1{
+   
+call main.txt_model.show     
+call main.cb_model.show 
+if has_mod1{     
+call main.ed_subs.hide
+call main.txt_subs.hide 
+}
+if !has_mod1{     
+call main.ed_subs.show
+call main.txt_subs.show
+}
+}
+
+END
+
+
+
+PROGRAM POSTINIT_PROGRAM
+BEGIN
+	put "almcwel2"
+	stata hidden
+END
+
+
+
+
+INCLUDE labor_info_lmcwel
+INCLUDE tb_options_lmc
+INCLUDE gr_options_lmc
+INCLUDE ifin
+
+HELP hlp1,   view("help lmcwel")
+RESET res1
+OK ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY copy1
+
+
+PROGRAM command
+BEGIN
+        put "lmcwel "
+
+	
+		
+        require main.vn_pcexp
+        varlist [main.vn_pcexp]
+		
+		INCLUDE _ifin_pr
+
+        put " "
+       
+        beginoptions
+        optionarg main.vl_hhid      
+        optionarg main.vn_hhs
+        optionarg main.vn_pl1     
+        optionarg main.dbsamex
+		
+        optionarg  labor_info_lmcwel.incomes
+		optionarg  labor_info_lmcwel.sectors
+		
+							                        
+        optionarg main.vn_hhg
+					   
+     
+
+							 
+                 if !main.ed_theta.isdefault() {
+                           optionarg main.ed_theta
+                 }   
+				 
+				       if !main.ed_epsilon.isdefault() {
+                           optionarg main.ed_epsilon
+                 } 
+				 
+                 
+              put " " /program  gra_output_lmc
+
+ 
+       
+   
+		
+		
+        optionarg  tb_options_lmc.fnamex
+         optionarg tb_options_lmc.ed_tab
+
+		
+		
+        optionarg gr_options_lmc.ed_gra 
+        optionarg gr_options_lmc.ed_folgr
+		  
+           endoptions 
+        
+       
+END

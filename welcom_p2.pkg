@@ -1,0 +1,108 @@
+* OCT2021 - 
+v 3
+d {bf:WELCOM   : WELfare and COMpetition}
+d Version       : Version           3.60   
+d Date          : October           2021
+d Stata Version : Required  14.0 and higher
+d
+d WELCOM is a product of the World Bank.
+d
+d Authors : {bf:Abdelkrim Araar(a)}  {bf:Eduardo Malasquez (b)} {bf:Sergio Olivieri(c)}  {bf:Carlos Rodriguez-Castelan (d)} 
+d
+d Emails  :  
+d           (a) {browse "mailto:aabd@ecn.ulaval.ca":aabd@ecn.ulaval.ca}  
+d           (b) {browse "mailto:emalasquez@worldbank.org":emalasquez@worldbank.org}
+d           (c) {browse "mailto:solivieri@worldbank.org":solivieri@worldbank.org}   
+d           (d) {browse "mailto:crodriguezc@worldbank.org":crodriguezc@worldbank.org}
+d 
+d Website : {browse "http://dasp.ecn.ulaval.ca/welcom/mi/":http://dasp.ecn.ulaval.ca/welcom/mi/}
+d
+
+f files/main/aduvm2.ado
+f files/main/aeasi2.ado
+f files/main/asdbsave_duvm.ado
+f files/main/asdbsave_easi.ado
+f files/main/asdbsave_wquaids.ado
+f files/main/awquaids2.ado
+f files/main/duvm.ado
+f files/main/duvm.dlg
+f files/main/duvm.sthlp
+f files/main/duvm_db_ini.ado
+f files/main/duvm_db_ini.dlg
+f files/main/easi_db_ini.ado
+f files/main/easi_db_ini.dlg
+f files/main/lquaids.mlib
+f files/main/mk_xtab_tr.ado
+f files/main/xml_tabastr.ado
+f files/main/nlsur__quaids.ado
+f files/main/quaids.ado
+f files/main/quaids_estat.ado
+f files/main/quaids_p.ado
+f files/main/sr_easi.ado
+f files/main/getRpath.ado
+f files/main/sr_easi.dlg
+f files/main/sr_easi.sthlp
+f files/main/welcom_examples.ado
+f files/main/wquaids.ado
+f files/main/wquaids.dlg
+f files/main/wquaids.sthlp
+f files/main/wquaids_db_ini.ado
+f files/main/wquaids_db_ini.dlg
+f files/main/_quaids__utils.mata
+f files/main/almcwel.ado       
+f files/main/almcwel2.ado      
+f files/main/asdbsave_lmc.ado  
+f files/main/basicstats.ado    
+f files/main/distable.ado      
+f files/main/distable0.ado     
+f files/main/labor_info_lmcwel.idlg
+f files/main/lmcgropt.ado      
+f files/main/lmcjob11.ado      
+f files/main/lmcjob21.ado      
+f files/main/lmcjob22.ado      
+f files/main/lmcjob31.ado      
+f files/main/lmcjob32.ado      
+f files/main/lmcjob33.ado      
+f files/main/lmcjob41.ado      
+f files/main/lmcjob42.ado      
+f files/main/lmcjob43.ado      
+f files/main/lmcjob51.ado      
+f files/main/lmcjob52.ado      
+f files/main/lmcjob53.ado      
+f files/main/lmcjob61.ado      
+f files/main/lmcjob62.ado      
+f files/main/lmcjob63.ado      
+f files/main/lmcjob64.ado      
+f files/main/lmcjobatk.ado     
+f files/main/lmcjobentropy.ado 
+f files/main/lmcjobgini.ado    
+f files/main/lmcjobgr1.ado     
+f files/main/lmcjobgr2.ado     
+f files/main/lmcjobpov.ado     
+f files/main/lmcjobratio.ado   
+f files/main/lmcjobstat.ado    
+f files/main/lmcwel.ado        
+f files/main/lmcwel.dlg        
+f files/main/lmcwel.sthlp      
+f files/main/lmcwell_ini_lmc.ado
+f files/main/lmcwell_ini_lmc.dlg
+f files/main/mcjob43.ado       
+f files/main/mcjob51.ado       
+f files/main/mcjob51b.ado      
+f files/main/mcjob52.ado       
+f files/main/mcjob53.ado       
+f files/main/mcjob61.ado       
+f files/main/mcjob61b.ado      
+f files/main/mcjob62.ado       
+f files/main/mcjob63.ado       
+f files/main/mcjob64.ado       
+f files/main/mcjobgr2.ado      
+f files/main/mcjobstat.ado     
+f files/main/mk_xtab_lmc.ado   
+f files/main/mk_xtab_mc.ado    
+f files/main/tabtitlmc.ado
+f files/main/gr_options_lmc.idlg       
+f files/main/tb_options_lmc.idlg 
+f files/main/jgraphs_lmc.hlp  
+f files/main/jtables_lmc.hlp 
+ 

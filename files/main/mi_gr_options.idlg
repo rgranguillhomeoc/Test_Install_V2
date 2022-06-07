@@ -1,0 +1,150 @@
+
+DIALOG mi_gr_options ,  tabtitle("Graph Options")
+BEGIN
+  DEFINE colu0  00
+  DEFINE colu1 70
+  DEFINE colu2 180
+  DEFINE colu3 290
+  DEFINE colu4 380
+  DEFINE colu5 430
+  DEFINE colu6 520
+  DEFINE colu7 620
+  DEFINE colu8 740
+  
+  DEFINE coluwd0 55
+  DEFINE coluwd1 100
+
+
+
+
+ CHECKBOX   chk_dgra     20    10    60    .,                   ///
+             label("Display:") default(0) option(dgra)
+ 
+  
+  TEXT     tx_frg colu1         +40      100    .,           ///
+          label("Min")
+  
+  TEXT     tx_frg2 colu2         @      100    .,           ///
+          label("Max")
+		  
+  TEXT     tx_psg colu3          @      300    .,           ///
+        label("Other twoway graph options")		  
+  
+  
+
+  
+
+  
+  
+   TEXT     tx_gr1 colu0      +20       60    .,           ///
+        label("Graph_1") right
+  
+  
+   EDIT   en_min1    colu1     @         coluwd1    .,           ///
+        label("")      option(min) default()
+		
+   EDIT   en_max1    colu2     @         coluwd1    .,           ///
+        label("")      option(max) default()
+		
+		
+   EDIT   en_opt1    colu3     @         500    .,           ///
+        label("")      option(ogr) default()
+	
+  
+    TEXT     tx_gr2 colu0      +30       60    .,           ///
+        label("Graph_2") right
+  
+  
+   EDIT   en_min2    colu1     @         coluwd1    .,           ///
+        label("")      option(min)  default()
+		
+   EDIT   en_max2    colu2     @         coluwd1    .,           ///
+        label("")      option(max)  default()
+		
+   EDIT   en_opt2    colu3     @         500   .,           ///
+        label("")      option(ogr)  default()
+     
+	
+	TEXT     tx_gr3 colu0      +30       60    .,           ///
+        label("Graph_3") right
+  
+  
+   EDIT   en_min3    colu1     @         coluwd1    .,           ///
+        label("")      option(min)  default()
+		
+   EDIT   en_max3    colu2     @         coluwd1    .,           ///
+        label("")      option(max)  default()
+		
+   EDIT   en_opt3    colu3     @         500   .,           ///
+        label("")      option(ogr)  default()
+
+
+   
+	
+		
+ END
+
+
+
+
+PROGRAM mi_gra_output
+
+BEGIN
+     if !mi_gr_options.en_min1.isdefault() |  !mi_gr_options.en_max1.isdefault() |  !mi_gr_options.en_opt1.isdefault() {
+	 put "opgr1("
+     if !mi_gr_options.en_min1.isdefault(){
+                        optionarg mi_gr_options.en_min1
+                        }
+						
+	 if !mi_gr_options.en_max1.isdefault(){
+                        optionarg mi_gr_options.en_max1
+                        }
+     if !mi_gr_options.en_opt1.isdefault(){
+                        optionarg mi_gr_options.en_opt1
+                        }
+	 put ")"					
+	 }
+	
+	 if !mi_gr_options.en_min2.isdefault() |  !mi_gr_options.en_max2.isdefault() |  !mi_gr_options.en_opt2.isdefault() {
+	 put "opgr2("
+     if !mi_gr_options.en_min2.isdefault(){
+                        optionarg mi_gr_options.en_min2
+                        }
+						
+	 if !mi_gr_options.en_max2.isdefault(){
+                        optionarg mi_gr_options.en_max2
+                        }
+     if !mi_gr_options.en_opt2.isdefault(){
+                        optionarg mi_gr_options.en_opt2
+                        }
+	 put ")"					
+	 }
+	 
+	      if !mi_gr_options.en_min3.isdefault() |  !mi_gr_options.en_max3.isdefault() | !mi_gr_options.en_opt3.isdefault() {
+	 put "opgr3("
+     if !mi_gr_options.en_min3.isdefault(){
+                        optionarg mi_gr_options.en_min3
+                        }
+						
+	 if !mi_gr_options.en_max3.isdefault(){
+                        optionarg mi_gr_options.en_max3
+                        }
+     if !mi_gr_options.en_opt3.isdefault(){
+                        optionarg mi_gr_options.en_opt3
+                        }
+	 put ")"					
+	 }
+	 
+	    
+END
+
+
+
+
+
+
+
+
+
+
+

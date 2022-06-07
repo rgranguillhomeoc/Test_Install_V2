@@ -1,0 +1,32 @@
+* OCT2021 - 
+v 3
+d {bf:WELCOM   : WELfare and COMpetition}
+d Version       : Version           3.60   
+d Date          : October           2021
+d Stata Version : Required  14.0 and higher
+d
+d WELCOM is a product of the World Bank.
+d
+d Authors : {bf:Abdelkrim Araar(a)}  {bf:Eduardo Malasquez (b)} {bf:Sergio Olivieri(c)}  {bf:Carlos Rodriguez-Castelan (d)} 
+d
+d Emails  :  
+d           (a) {browse "mailto:aabd@ecn.ulaval.ca":aabd@ecn.ulaval.ca}  
+d           (b) {browse "mailto:emalasquez@worldbank.org":emalasquez@worldbank.org}
+d           (c) {browse "mailto:solivieri@worldbank.org":solivieri@worldbank.org}   
+d           (d) {browse "mailto:crodriguezc@worldbank.org":crodriguezc@worldbank.org}
+d 
+d Website : {browse "http://dasp.ecn.ulaval.ca/welcom/mi/":http://dasp.ecn.ulaval.ca/welcom/mi/}
+d
+f files/main/data/hh_data_egypt.dta 
+f files/main/data/incomes.dta       
+f files/main/data/Mexico_2014.dta   
+f files/main/data/Mexico_2014_2018_Cellphones.dta
+f files/main/data/Mexico_2014_Cellphones.dta
+f files/main/data/Mexico_2014_Cereals.dta
+f files/main/data/Mexico_2014_Cereals_F.dta
+f files/main/data/sectors.dta 
+f files/main/data/SAM_MEX_2003.dta 
+f files/main/data/Mexico_2014_WAP.dta  
+f files/main/data/mc_example.dta  
+
+

@@ -1,0 +1,237 @@
+
+
+
+
+VERSION 14.0
+SYNCHRONOUS_ONLY 
+
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 790 380
+DIALOG main, label(" WELCOM| Price Elasticity | Deaton Unit Value Model--> duvm command") tabtitle("Main")
+
+BEGIN
+
+   GROUPBOX chk_per11  10    10  380 80,                         ///
+            label("Dialog box inputs: ")           ///
+                   
+    TEXT txt_vname11     20    +20    140      .,                 ///  
+                  label("Load the inputs:   ")                           
+       
+    BUTTON  bu_load    140    @     240      .,                 ///
+    label("Load") onpush("view dialog duvm_db_ini") 
+         
+         
+        TEXT  tx_dbsfile     20    +25    140      .,                 ///  
+         label("Save the inputs:")                                
+   
+   FILE  dbsamex      140    @     240      .,                    ///
+    label ("Browse...")    save option("inisave")                   ///
+    filter("MetaFile (*.duvm)*.duvm*.* (*.*)*.*")   
+
+
+ GROUPBOX intvar 10     +40    380  200,                      ///
+             label("Variables of the model")
+  TEXT   tx_share      20      +25   220   .,                      ///
+        label("Items*:")
+  
+  EDIT name_items   20      +20   360       .,                      ///
+        label("") 
+                 
+     /*           
+   TEXT tx_dc      250      25   100   .,                      ///
+        label("Decile:")
+  
+  VARLIST vn_dc   250      45   100       .,                      ///
+        label("")       option(decile)  
+ */
+   TEXT tx_hhsize      20      +50   140   .,                      ///
+        label("Household size*:")
+		
+   VARNAME vn_hhsize   150      @   230       .,                      ///
+        label("")	option(hhsize)
+		
+   TEXT tx_hhexp      20      +30   140   .,                      ///
+        label("Total HH expenditures*:")
+		
+   VARNAME vn_hhexp   150      @   230       .,                      ///
+        label("") option(expend)
+		
+    TEXT tx_hhwe      20      +30   140   .,                      ///
+        label("Household weight:")
+		
+   VARNAME vn_hhwe   150      @   230       .,                      ///
+        label("")	option(hweight)	
+ 
+  GROUPBOX ointvar 400     10    380  140,                      ///
+             label("Other explanatory variables of the model")
+			 
+  TEXT   tx_indcat      410     +30   260   .,                      ///
+        label("Other categorical independant variables:")
+  
+  VARLIST vl_indcat   410      +20   360       .,   ///
+  option(indcat)
+  
+   TEXT   tx_indcon      410     +30   260   .,                      ///
+  label("Other continues independant variables:")
+  
+    VARLIST vl_indcon   410      +20   360       .,    ///
+	 option(indcon)
+	 
+   GROUPBOX rintvar 400     +60    380  120,                      ///
+             label("Cluster, region and survey round indicators")
+  
+   TEXT tx_cluster      410      +30   80   .,                      ///
+        label("Cluster*:")
+		
+   VARNAME vn_cluster   480      @   290       .,                      ///
+        label("")	option(cluster)
+
+		
+   TEXT tx_region      410      +25   80   .,                      ///
+        label("Region:")
+		
+   VARNAME vn_region   480      @   290       .,                      ///
+        label("")	option(region)
+		
+    TEXT tx_round      410      +25   80   .,                      ///
+        label("Round:")
+		
+    VARNAME vn_round   480      @   290       .,                      ///
+        label("")	option(subround)		
+		
+   
+     GROUPBOX otoptions 400     +50    380  60,                      ///
+             label("Other model option(s):")
+	 		 
+    
+	 CHECKBOX ck_csb      410      +20   360   .,                      ///
+        label("Correction of the sample selection bias (nil expenditures)") option(csb)
+	
+	/*
+     GROUPBOX sample 410     10    360  140,                      ///
+             label("Other explanatory variables of the model")
+		*/	 
+   DEFINE _x 20
+   DEFINE _y 240
+   
+     TEXT tx_Note      20      +20   250   .,                      ///
+        label("Note(s): the (*) indicates a required information.")
+     
+
+
+
+END
+
+
+
+
+DIALOG resop,  tabtitle("Results")
+
+BEGIN
+                                        
+SPINNER  sp_dec    10       25      50    .,                    /*
+                */ label("Decimals")                            /*
+                */ min(0) default(3) max(12)                            /*
+                */ option(dec)
+
+TEXT     sp_txt  70      25      140      .,                            /*
+                */ label("Number of decimals")  
+
+                                
+  CHECKBOX ck_dregres 10     +40    200  .,                           /*
+                */ label("Display regression results")               /*
+                */ option("dregres")                                 /*
+                */
+    
+TEXT     sp2_txt  10      +40      200      .,                            /*
+                */ label("Number of bootstrap iterations :")  
+
+                                
+EDIT    n_boot 210    @    120  .,                           /*
+                */ default(0)               /*
+                */ option("boot")                                 /*
+                */	
+
+    /*
+
+	
+  CHECKBOX ck_dgra 10     +35    200  .,                           /*
+                */ label("Display the graph of elasticities according to the deciles")               /*
+                */ option("dgra")                                 /*
+                */
+        */ 
+  TEXT tx_dec      10      +40   140   .,                      ///
+        label("Household group:")		
+  VARNAME vn_dec   210      @   120       .,                      ///
+        label("") option(hgroup)		
+  TEXT  tx_eldecfile     10    +60    140      .,                 ///  
+  label("Save the elasticity file:") 
+  FILE  eldecfile      140   @     270      .,                    ///
+  label ("Browse...")    save option("xfil")                   ///
+  filter("MetaFile (*.xml)*.xml*.* (*.*)*.*")
+                                
+                                
+END
+
+
+
+SCRIPT PREINIT
+BEGIN
+create BOOLEAN has_ini                         
+END
+
+
+PROGRAM POSTINIT_PROGRAM
+BEGIN
+        put "aduvm2"
+        stata hidden
+END
+
+
+
+HELP hlp1,   view("help duvm")
+RESET res1
+OK      ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY  copy1,
+
+PROGRAM command
+BEGIN
+        put "duvm "
+        require  main.name_items
+        varlist [main.name_items]
+      
+
+        beginoptions  
+		
+        put " "
+        optionarg main.vn_hhsize
+		optionarg main.vn_hhexp
+		optionarg main.vn_hhwe
+		
+		
+		optionarg main.vn_cluster
+		optionarg main.vn_region
+		optionarg main.vn_round
+		
+		optionarg main.dbsamex
+		
+        optionarg main.vl_indcat
+        optionarg main.vl_indcon
+		optionarg main.ck_csb
+		
+                        if !resop.sp_dec.isdefault() {
+                        optionarg resop.sp_dec
+                        }
+                optionarg resop.ck_dregres
+				optionarg resop.vn_dec
+                optionarg resop.eldecfile
+				optionarg resop.n_boot
+                                           
+        endoptions
+        
+        
+        
+END

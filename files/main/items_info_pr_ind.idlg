@@ -1,0 +1,1304 @@
+
+
+
+DIALOG items_info_pr_ind,  tabtitle(" Direct Effect ")
+BEGIN
+  DEFINE colu0  20
+  DEFINE colu1 70
+  DEFINE colu11 155
+  DEFINE colu2 180
+  DEFINE colu3 310
+  DEFINE colu4 440
+  DEFINE colu5 470
+  DEFINE colu6 560
+  DEFINE colu7 650
+  DEFINE colu8 740
+  
+  DEFINE coluwd0 55
+  DEFINE coluwd1 100
+  DEFINE coluwd11 80
+  DEFINE coluwd111 40
+  DEFINE coluwd4 160
+
+  CHECKBOX chk_per11  10    10  120 .,             ///
+         label("Direct effects: ")                 ///
+        onclickon(program ptb_options_pr_ind_items)                      ///
+        onclickoff(script  tb_options_pr_ind_items) default(1)
+
+		
+ GROUPBOX chk_per12  10    +30  840 440,                         ///
+            label("Items info ")
+			
+    
+ TEXT     tx_ini 20     +20       170       .,           ///
+          label("Initialise information with:") 
+      
+ COMBOBOX cb_ini 190      @          120       .,       ///
+          contents(ini_contents)                             ///
+          values(ini_values)                                     ///                            
+          onselchangelist(ini_change) default(1)                  ///
+          dropdownlist option(oinf) 
+
+
+ TEXT     tx_items 380      @      120       .,           ///
+          label("Number of items*:") 
+          
+ COMBOBOX cb_items 510      @         80       .,        ///
+          contents(item_contents)                                ///
+          onselchangelist(item_change) default(0)                          ///
+          dropdownlist option(nitems)  
+	  
+ EDIT    ed_items 510      @         80       .,        ///
+         option(nitems) 	default(0)  	  
+   
+  TEXT     tx_mtelp colu0         +30      170    .,           ///
+          label("Matrix of price elasticities")
+
+   EDIT    ed_matpel 190      @         120       .,        ///
+         option(matpel) 
+ 
+   TEXT     tx_mteli colu0         +25      170    .,           ///
+          label("Matrix of income elasticities")
+   EDIT    ed_matiel 190      @         120       .,        ///
+         option(matiel) 
+ 
+ TEXT     tx_fr colu1         +40      70    .,           ///
+          label("Short names")
+  
+  
+  TEXT     tx_fr2 colu2         @      100    .,           ///
+          label("Varnames*")
+		  
+		
+   /* TEXT     tx_in1 colu6      @         @         .,           ///
+        label("Subsidy")*/
+   
+   TEXT     tx_in3     colu3      @         @         .,           ///
+        label("Price change")
+		  
+   TEXT     tx_in4     colu4      @         @         .,           ///
+        label("Elasticity")
+		
+  
+  TEXT     tx_item1 colu0      +20       40    .,           ///
+        label("Item_1") right
+  
+    
+  TEXT     tx_note colu0      @       680    .,           ///
+        label("Note: No direct effects to compute. Indicate the number of items to insert information on items.") left
+		
+  EDIT    en_sn1     colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+   
+ 
+ 
+ VARNAME   var_sn    colu1     @         coluwd1    .,           ///
+        label("")      option(snames) 
+		
+  VARNAME  var_item    colu2     @         coluwd1    .,           ///
+        label("")  option(itnames)  		
+		
+  VARNAME  vn_item1    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+  
+
+  VARNAME  en_prc1   colu3      @         @         .,           ///
+        option(prc)                                             ///
+        label("")    
+		
+  VARNAME  en_elas1   colu4      @         @         .,           ///
+        option(elas)                                             ///
+        label("") 		
+
+  VARNAME  var_prc1    colu3     @         coluwd1    .,           ///
+        label("")  option(prc) 
+		
+	
+  VARNAME  var_elas1    colu4     @         coluwd1    .,           ///
+        label("")  option(elas) 
+
+		
+   		
+
+   
+  TEXT     tx_item2 colu0      +30      40    .,           ///
+        label("Item_2") right
+ 
+		
+  EDIT   en_sn2    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+		
+  VARNAME  vn_item2    colu2     @         coluwd1    .,           ///
+        label("")  option(it) 
+   
+  VARNAME  en_prc2   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("")  
+        
+   VARNAME  en_elas2   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("")  		
+       
+	   
+  TEXT     tx_item3 colu0      +30       40    .,           ///
+        label("Item_3") right
+ 
+  
+  EDIT   en_sn3    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+		
+ 
+ VARNAME  vn_item3    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+        
+		
+  VARNAME  en_prc3   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("")  
+
+   VARNAME  en_elas3   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("")  	
+		
+TEXT     tx_item4 colu0      +30       40    .,           ///
+        label("Item_4") right
+ 
+  
+  EDIT   en_sn4    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+		
+  VARNAME  vn_item4    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+        
+		
+  VARNAME  en_prc4   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("")   
+		
+   VARNAME  en_elas4   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("")  	
+		
+   TEXT     tx_item5 colu0      +30       40    .,           ///
+        label("Item_5") right
+ 
+  
+  EDIT   en_sn5    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+  
+  VARNAME  vn_item5    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+        
+ 
+
+  VARNAME  en_prc5   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("")   
+		
+   VARNAME  en_elas5   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("")  			
+		
+   TEXT     tx_item6 colu0      +30       40    .,           ///
+        label("Item_6") right
+ 
+  
+  EDIT   en_sn6    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+		
+  
+  VARNAME  vn_item6    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+        
+		
+  VARNAME  en_prc6   colu3      @         @         .,           ///
+        option(prc)                                              ///
+      label("")   
+
+  VARNAME  en_elas6   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("")  	
+		
+  TEXT     tx_item7 colu0      +30       40    .,           ///
+        label("Item_7") right
+ 
+  
+  EDIT   en_sn7    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+		
+		
+  VARNAME  vn_item7    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+ 
+ VARNAME  en_prc7   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("")   
+		
+  VARNAME  en_elas7   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("")  	 
+		
+  TEXT     tx_item8 colu0      +30       40    .,           ///
+        label("Item_8") right
+ 
+  
+  EDIT   en_sn8    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+		
+  VARNAME  vn_item8    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    	
+
+  VARNAME  en_prc8   colu3      @         @         .,           ///
+        option(prc)                               ///
+        label("")   
+		     
+  VARNAME  en_elas8   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("") 
+ 
+  TEXT     tx_item9 colu0      +30       40    .,           ///
+        label("Item_9") right
+		
+		
+ EDIT   en_sn9    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+			
+		
+  VARNAME  vn_item9    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+        
+ 
+ VARNAME  en_prc9   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("")  
+
+  VARNAME  en_elas9   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("") 		
+	
+		
+  TEXT     tx_item10 colu0      +30       40    .,           ///
+        label("Item_10") right
+ 
+  
+  EDIT   en_sn10    colu1     @         coluwd11    .,           ///
+        label("")      option(sn) 
+			
+		
+  VARNAME  vn_item10    colu2     @         coluwd1    .,           ///
+        label("")  option(it)    
+        
+   VARNAME  en_prc10   colu3      @         @         .,           ///
+        option(prc)                                              ///
+        label("") 
+		
+ 		
+  VARNAME  en_elas10   colu4      @         @         .,           ///
+        option(elas)                                              ///
+        label("") 		 
+
+	
+END
+
+
+
+PROGRAM ptb_options_pr_ind_items
+BEGIN
+        if items_info_pr_ind.chk_per11 {
+			call items_info_pr_ind.chk_per12.enable
+			call items_info_pr_ind.tx_ini.enable
+			call items_info_pr_ind.cb_ini.enable
+			call items_info_pr_ind.tx_items.enable
+			call items_info_pr_ind.cb_items.enable
+			call items_info_pr_ind.ed_items.enable
+			call items_info_pr_ind.tx_mtelp.enable
+			call items_info_pr_ind.ed_matpel.enable
+			call items_info_pr_ind.ed_matiel.enable
+			call items_info_pr_ind.tx_fr.enable
+			call items_info_pr_ind.tx_fr2.enable
+			call items_info_pr_ind.tx_mtelp.enable
+			call items_info_pr_ind.tx_mteli.enable
+			call items_info_pr_ind.tx_in3.enable
+			call items_info_pr_ind.tx_in4.enable
+			call items_info_pr_ind.tx_item1.enable
+			call items_info_pr_ind.tx_note.enable
+			call items_info_pr_ind.en_sn1.enable
+			call items_info_pr_ind.var_sn.enable
+			call items_info_pr_ind.var_item.enable
+			call items_info_pr_ind.vn_item1.enable
+			call items_info_pr_ind.en_prc1.enable
+			call items_info_pr_ind.en_elas1.enable
+			call items_info_pr_ind.var_prc1.enable
+			call items_info_pr_ind.var_elas1.enable
+			call items_info_pr_ind.tx_item2.enable
+			call items_info_pr_ind.en_sn2.enable
+			call items_info_pr_ind.vn_item2.enable
+			call items_info_pr_ind.en_prc2.enable
+			call items_info_pr_ind.en_elas2.enable
+			
+			call items_info_pr_ind.tx_item3.enable
+			call items_info_pr_ind.en_sn3.enable
+			call items_info_pr_ind.vn_item3.enable
+			call items_info_pr_ind.en_prc3.enable
+			call items_info_pr_ind.en_elas3.enable
+			
+			call items_info_pr_ind.tx_item4.enable
+			call items_info_pr_ind.en_sn4.enable
+			call items_info_pr_ind.vn_item4.enable
+			call items_info_pr_ind.en_prc4.enable
+			call items_info_pr_ind.en_elas4.enable
+			
+			call items_info_pr_ind.tx_item5.enable
+			call items_info_pr_ind.en_sn5.enable
+			call items_info_pr_ind.vn_item5.enable
+			call items_info_pr_ind.en_prc5.enable
+			call items_info_pr_ind.en_elas5.enable
+			
+			call items_info_pr_ind.tx_item6.enable
+			call items_info_pr_ind.en_sn6.enable
+			call items_info_pr_ind.vn_item6.enable
+			call items_info_pr_ind.en_prc6.enable
+			call items_info_pr_ind.en_elas6.enable
+			
+			call items_info_pr_ind.tx_item7.enable
+			call items_info_pr_ind.en_sn7.enable
+			call items_info_pr_ind.vn_item7.enable
+			call items_info_pr_ind.en_prc7.enable
+			call items_info_pr_ind.en_elas7.enable
+			
+			call items_info_pr_ind.tx_item8.enable
+			call items_info_pr_ind.en_sn8.enable
+			call items_info_pr_ind.vn_item8.enable
+			call items_info_pr_ind.en_prc8.enable
+			call items_info_pr_ind.en_elas8.enable
+			
+			call items_info_pr_ind.tx_item9.enable
+			call items_info_pr_ind.en_sn9.enable
+			call items_info_pr_ind.vn_item9.enable
+			call items_info_pr_ind.en_prc9.enable
+			call items_info_pr_ind.en_elas9.enable
+			
+						
+			call items_info_pr_ind.tx_item10.enable
+			call items_info_pr_ind.en_sn10.enable
+			call items_info_pr_ind.vn_item10.enable
+			call items_info_pr_ind.en_prc10.enable
+			call items_info_pr_ind.en_elas10.enable
+			
+        }
+		
+	 if !items_info_pr_ind.chk_per11 {
+	        call items_info_pr_ind.chk_per12.disable
+			call items_info_pr_ind.tx_ini.disable
+			call items_info_pr_ind.cb_ini.disable
+			call items_info_pr_ind.tx_items.disable
+			call items_info_pr_ind.cb_items.disable
+			call items_info_pr_ind.ed_items.disable
+			call items_info_pr_ind.tx_mtelp.disable
+			call items_info_pr_ind.ed_matpel.disable
+			call items_info_pr_ind.ed_matiel.disable
+			call items_info_pr_ind.tx_fr.disable
+			call items_info_pr_ind.tx_fr2.disable
+			call items_info_pr_ind.tx_mtelp.disable
+			call items_info_pr_ind.tx_mteli.disable
+			call items_info_pr_ind.tx_in3.disable
+			call items_info_pr_ind.tx_in4.disable
+			call items_info_pr_ind.tx_item1.disable
+			call items_info_pr_ind.tx_note.disable
+			call items_info_pr_ind.en_sn1.disable
+			call items_info_pr_ind.var_sn.disable
+			call items_info_pr_ind.var_item.disable
+			call items_info_pr_ind.vn_item1.disable
+			call items_info_pr_ind.en_prc1.disable
+			call items_info_pr_ind.en_elas1.disable
+			call items_info_pr_ind.var_prc1.disable
+			call items_info_pr_ind.var_elas1.disable
+			call items_info_pr_ind.tx_item2.disable
+			call items_info_pr_ind.en_sn2.disable
+			call items_info_pr_ind.vn_item2.disable
+			call items_info_pr_ind.en_prc2.disable
+			call items_info_pr_ind.en_elas2.disable
+			
+			call items_info_pr_ind.tx_item3.disable
+			call items_info_pr_ind.en_sn3.disable
+			call items_info_pr_ind.vn_item3.disable
+			call items_info_pr_ind.en_prc3.disable
+			call items_info_pr_ind.en_elas3.disable
+
+			call items_info_pr_ind.tx_item4.disable
+			call items_info_pr_ind.en_sn4.disable
+			call items_info_pr_ind.vn_item4.disable
+			call items_info_pr_ind.en_prc4.disable
+			call items_info_pr_ind.en_elas4.disable
+			
+			call items_info_pr_ind.tx_item5.disable
+			call items_info_pr_ind.en_sn5.disable
+			call items_info_pr_ind.vn_item5.disable
+			call items_info_pr_ind.en_prc5.disable
+			call items_info_pr_ind.en_elas5.disable
+			
+			call items_info_pr_ind.tx_item6.disable
+			call items_info_pr_ind.en_sn6.disable
+			call items_info_pr_ind.vn_item6.disable
+			call items_info_pr_ind.en_prc6.disable
+			call items_info_pr_ind.en_elas6.disable
+			
+			call items_info_pr_ind.tx_item7.disable
+			call items_info_pr_ind.en_sn7.disable
+			call items_info_pr_ind.vn_item7.disable
+			call items_info_pr_ind.en_prc7.disable
+			call items_info_pr_ind.en_elas7.disable
+			
+			call items_info_pr_ind.tx_item8.disable
+			call items_info_pr_ind.en_sn8.disable
+			call items_info_pr_ind.vn_item8.disable
+			call items_info_pr_ind.en_prc8.disable
+			call items_info_pr_ind.en_elas8.disable
+			
+			call items_info_pr_ind.tx_item9.disable
+			call items_info_pr_ind.en_sn9.disable
+			call items_info_pr_ind.vn_item9.disable
+			call items_info_pr_ind.en_prc9.disable
+			call items_info_pr_ind.en_elas9.disable
+			
+			call items_info_pr_ind.tx_item10.disable
+			call items_info_pr_ind.en_sn10.disable
+			call items_info_pr_ind.vn_item10.disable
+			call items_info_pr_ind.en_prc10.disable
+			call items_info_pr_ind.en_elas10.disable
+        }
+END
+
+
+SCRIPT tb_options_pr_ind_items
+BEGIN 
+		items_info_pr_ind.chk_per12.disable
+		items_info_pr_ind.tx_ini.disable
+		items_info_pr_ind.cb_ini.disable
+		items_info_pr_ind.tx_items.disable
+		items_info_pr_ind.cb_items.disable
+		items_info_pr_ind.ed_items.disable
+		items_info_pr_ind.tx_mtelp.disable
+		items_info_pr_ind.ed_matpel.disable
+		items_info_pr_ind.ed_matiel.disable
+		items_info_pr_ind.tx_fr.disable
+		items_info_pr_ind.tx_fr2.disable
+		items_info_pr_ind.tx_mtelp.disable
+		items_info_pr_ind.tx_mteli.disable
+		items_info_pr_ind.tx_in3.disable
+		items_info_pr_ind.tx_in4.disable
+		items_info_pr_ind.tx_item1.disable
+		items_info_pr_ind.tx_note.disable
+		items_info_pr_ind.en_sn1.disable
+		items_info_pr_ind.var_sn.disable
+		items_info_pr_ind.var_item.disable
+		items_info_pr_ind.vn_item1.disable
+		items_info_pr_ind.en_prc1.disable
+		items_info_pr_ind.en_elas1.disable
+		items_info_pr_ind.var_prc1.disable
+		items_info_pr_ind.var_elas1.disable
+		items_info_pr_ind.tx_item2.disable
+		items_info_pr_ind.en_sn2.disable
+		items_info_pr_ind.vn_item2.disable
+		items_info_pr_ind.en_prc2.disable
+		items_info_pr_ind.en_elas2.disable
+		
+			items_info_pr_ind.tx_item3.disable
+			items_info_pr_ind.en_sn3.disable
+			items_info_pr_ind.vn_item3.disable
+			items_info_pr_ind.en_prc3.disable
+			items_info_pr_ind.en_elas3.disable
+
+			items_info_pr_ind.tx_item4.disable
+			items_info_pr_ind.en_sn4.disable
+			items_info_pr_ind.vn_item4.disable
+			items_info_pr_ind.en_prc4.disable
+			items_info_pr_ind.en_elas4.disable
+			
+			items_info_pr_ind.tx_item5.disable
+			items_info_pr_ind.en_sn5.disable
+			items_info_pr_ind.vn_item5.disable
+			items_info_pr_ind.en_prc5.disable
+			items_info_pr_ind.en_elas5.disable
+			
+			items_info_pr_ind.tx_item6.disable
+			items_info_pr_ind.en_sn6.disable
+			items_info_pr_ind.vn_item6.disable
+			items_info_pr_ind.en_prc6.disable
+			items_info_pr_ind.en_elas6.disable
+			
+			items_info_pr_ind.tx_item7.disable
+			items_info_pr_ind.en_sn7.disable
+			items_info_pr_ind.vn_item7.disable
+			items_info_pr_ind.en_prc7.disable
+			items_info_pr_ind.en_elas7.disable
+			
+			items_info_pr_ind.tx_item8.disable
+			items_info_pr_ind.en_sn8.disable
+			items_info_pr_ind.vn_item8.disable
+			items_info_pr_ind.en_prc8.disable
+			items_info_pr_ind.en_elas8.disable
+			
+			items_info_pr_ind.tx_item9.disable
+			items_info_pr_ind.en_sn9.disable
+			items_info_pr_ind.vn_item9.disable
+			items_info_pr_ind.en_prc9.disable
+			items_info_pr_ind.en_elas9.disable
+			
+			items_info_pr_ind.tx_item10.disable
+			items_info_pr_ind.en_sn10.disable
+			items_info_pr_ind.vn_item10.disable
+			items_info_pr_ind.en_prc10.disable
+			items_info_pr_ind.en_elas10.disable
+END
+
+LIST item_contents
+BEGIN  
+        0
+        1
+        2
+        3
+        4
+        5
+        6
+		7
+		8
+		9
+		10
+END
+
+LIST ini_contents
+BEGIN
+	Paramater values
+	Variables
+END
+
+
+
+LIST ini_values
+BEGIN
+	1
+	2
+END
+
+
+
+LIST scen_contents
+BEGIN
+        1
+        2
+        3
+END
+
+LIST item_change
+BEGIN
+        script item0
+		script item1
+        script item2
+        script item3
+        script item4
+        script item5
+        script item6
+	    script item7
+        script item8
+        script item9
+        script item10
+END
+
+
+
+
+LIST ini_change
+BEGIN
+        script ini1
+        script ini2
+END
+
+SCRIPT ini1
+BEGIN
+        has_ini.settrue
+        program check_items
+		program check_items_c
+		program check_items_cc
+END
+
+SCRIPT ini2
+BEGIN
+        has_ini.setfalse
+        program check_items
+		program check_items_c
+		program check_items_cc
+END
+
+SCRIPT item0
+BEGIN
+        has_item0.settrue
+		has_item1.setfalse
+        has_item2.setfalse
+        has_item3.setfalse
+        has_item4.setfalse
+        has_item5.setfalse
+        has_item6.setfalse
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item1
+BEGIN
+        has_item0.setfalse
+        has_item1.settrue
+        has_item2.setfalse
+        has_item3.setfalse
+        has_item4.setfalse
+        has_item5.setfalse
+        has_item6.setfalse
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item2
+BEGIN
+        has_item0.setfalse
+	    has_item1.settrue
+        has_item2.settrue
+        has_item3.setfalse
+        has_item4.setfalse
+        has_item5.setfalse
+        has_item6.setfalse
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item3
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.setfalse
+        has_item5.setfalse
+        has_item6.setfalse
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item4
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.setfalse
+        has_item6.setfalse
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item5
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.settrue
+        has_item6.setfalse
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item6
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.settrue
+        has_item6.settrue
+		has_item7.setfalse
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item7
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.settrue
+        has_item6.settrue
+		has_item7.settrue
+        has_item8.setfalse
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item8
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.settrue
+        has_item6.settrue
+		has_item7.settrue
+        has_item8.settrue
+        has_item9.setfalse
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item9
+BEGIN
+        has_item0.setfalse
+		has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.settrue
+        has_item6.settrue
+		has_item7.settrue
+        has_item8.settrue
+        has_item9.settrue
+        has_item10.setfalse
+        program check_items
+END
+
+SCRIPT item10
+BEGIN
+        has_item0.setfalse
+        has_item1.settrue
+        has_item2.settrue
+        has_item3.settrue
+        has_item4.settrue
+        has_item5.settrue
+        has_item6.settrue
+		has_item7.settrue
+        has_item8.settrue
+        has_item9.settrue
+        has_item10.settrue
+        program check_items
+END
+
+
+
+
+SCRIPT pos1
+BEGIN
+items_info_pr_ind.tx_sz.setposition 300 200 . .
+END
+
+PROGRAM check_items
+BEGIN
+ if has_ini {
+				
+	    if has_item0 {
+                call items_info_pr_ind.tx_item1.hide
+				call items_info_pr_ind.en_sn1.hide
+                call items_info_pr_ind.vn_item1.hide
+                call items_info_pr_ind.en_prc1.hide
+				call items_info_pr_ind.en_elas1.hide
+                call items_info_pr_ind.tx_fr.hide
+                call items_info_pr_ind.tx_fr2.hide 
+                call items_info_pr_ind.tx_in3.hide  
+                call items_info_pr_ind.tx_in4.hide
+				call items_info_pr_ind.tx_item1.hide
+				call items_info_pr_ind.tx_note.show
+        }
+
+        if !has_item0 {
+                call items_info_pr_ind.tx_item1.show
+				call items_info_pr_ind.en_sn1.show
+                call items_info_pr_ind.vn_item1.show
+                call items_info_pr_ind.en_prc1.show
+				call items_info_pr_ind.en_elas1.show
+				call items_info_pr_ind.tx_fr.show
+                call items_info_pr_ind.tx_fr2.show 
+                call items_info_pr_ind.tx_in3.show  
+                call items_info_pr_ind.tx_in4.show
+				call items_info_pr_ind.tx_item1.show
+				call items_info_pr_ind.tx_note.hide
+			
+        }			
+
+
+        if has_item1 {
+               
+                call items_info_pr_ind.tx_item1.show
+				call items_info_pr_ind.en_sn1.show
+                call items_info_pr_ind.vn_item1.show
+                call items_info_pr_ind.en_prc1.show
+				call items_info_pr_ind.en_elas1.show
+               
+        }
+
+        if !has_item1 {
+                call items_info_pr_ind.tx_item1.show
+                call items_info_pr_ind.en_sn1.hide 
+                call items_info_pr_ind.en_prc1.hide 
+				call items_info_pr_ind.var_elas1.hide
+			
+        }
+          if has_item2 {
+                call items_info_pr_ind.tx_item2.show
+                call items_info_pr_ind.en_sn2.show
+                call items_info_pr_ind.vn_item2.show
+                call items_info_pr_ind.en_prc2.show 
+                call items_info_pr_ind.en_elas2.show 
+        }
+
+        if !has_item2 {
+                call items_info_pr_ind.tx_item2.hide
+                call items_info_pr_ind.en_sn2.hide
+                call items_info_pr_ind.vn_item2.hide
+                call items_info_pr_ind.en_prc2.hide
+				call items_info_pr_ind.en_elas2.hide
+				
+        }
+        if has_item3 {
+		        call items_info_pr_ind.tx_item3.show
+                call items_info_pr_ind.en_sn3.show
+                call items_info_pr_ind.vn_item3.show
+                call items_info_pr_ind.en_prc3.show
+				call items_info_pr_ind.en_elas3.show
+
+               
+        }
+
+        if !has_item3 {
+                call items_info_pr_ind.tx_item3.hide
+                call items_info_pr_ind.en_sn3.hide
+                call items_info_pr_ind.vn_item3.hide
+                call items_info_pr_ind.en_prc3.hide
+				call items_info_pr_ind.en_elas3.hide
+
+			
+        }        
+		
+		if has_item4 {
+		        call items_info_pr_ind.tx_item4.show
+                call items_info_pr_ind.en_sn4.show
+                call items_info_pr_ind.vn_item4.show
+                call items_info_pr_ind.en_prc4.show
+				call items_info_pr_ind.en_elas4.show
+               
+        }
+
+        if !has_item4 {
+                call items_info_pr_ind.tx_item4.hide
+                call items_info_pr_ind.en_sn4.hide
+                call items_info_pr_ind.vn_item4.hide
+                call items_info_pr_ind.en_prc4.hide
+				call items_info_pr_ind.en_elas4.hide
+			 }	
+		
+	        if has_item5 {
+			    call items_info_pr_ind.tx_item5.show
+                call items_info_pr_ind.en_sn5.show
+                call items_info_pr_ind.vn_item5.show
+                call items_info_pr_ind.en_prc5.show
+				call items_info_pr_ind.en_elas5.show
+               
+        }
+
+        if !has_item5 {
+                call items_info_pr_ind.tx_item5.hide
+                call items_info_pr_ind.en_sn5.hide
+                call items_info_pr_ind.vn_item5.hide
+                call items_info_pr_ind.en_prc5.hide 
+				call items_info_pr_ind.en_elas5.hide
+
+			 }	
+			 
+			 
+	   
+                    if has_item6 {
+			    call items_info_pr_ind.tx_item6.show		
+                call items_info_pr_ind.en_sn6.show
+                call items_info_pr_ind.vn_item6.show
+                call items_info_pr_ind.en_prc6.show 
+				call items_info_pr_ind.en_elas6.show
+
+               
+        }
+
+        if !has_item6 {
+                call items_info_pr_ind.tx_item6.hide
+                call items_info_pr_ind.en_sn6.hide
+                call items_info_pr_ind.vn_item6.hide
+                call items_info_pr_ind.en_prc6.hide
+				call items_info_pr_ind.en_elas6.hide
+
+			 }	
+		
+		        
+                     if has_item7 {
+				call items_info_pr_ind.tx_item7.show 	 
+                call items_info_pr_ind.en_sn7.show
+                call items_info_pr_ind.vn_item7.show
+                call items_info_pr_ind.en_prc7.show
+				call items_info_pr_ind.en_elas7.show
+
+               
+        }
+
+        if !has_item7 {
+                call items_info_pr_ind.tx_item7.hide
+                call items_info_pr_ind.en_sn7.hide
+                call items_info_pr_ind.vn_item7.hide
+                call items_info_pr_ind.en_prc7.hide 
+				call items_info_pr_ind.en_elas7.hide
+
+			 }	
+		
+		
+		        
+                if has_item8 {
+				call items_info_pr_ind.tx_item8.show
+                call items_info_pr_ind.en_sn8.show
+                call items_info_pr_ind.vn_item8.show
+                call items_info_pr_ind.en_prc8.show
+				call items_info_pr_ind.en_elas8.show
+
+				
+               
+        }
+
+        if !has_item8 {
+                call items_info_pr_ind.tx_item8.hide
+                call items_info_pr_ind.en_sn8.hide
+                call items_info_pr_ind.vn_item8.hide
+                call items_info_pr_ind.en_prc8.hide 
+				call items_info_pr_ind.en_elas8.hide
+
+			 }	
+		        
+                if has_item9 {
+				call items_info_pr_ind.tx_item9.show
+                call items_info_pr_ind.en_sn9.show
+                call items_info_pr_ind.vn_item9.show
+                call items_info_pr_ind.en_prc9.show
+				call items_info_pr_ind.en_elas9.show
+
+               
+        }
+
+        if !has_item9 {
+                call items_info_pr_ind.tx_item9.hide
+                call items_info_pr_ind.en_sn9.hide
+                call items_info_pr_ind.vn_item9.hide
+                call items_info_pr_ind.en_prc9.hide 
+				call items_info_pr_ind.en_elas9.hide
+
+			 }	
+			 
+               if has_item10 {
+			   call items_info_pr_ind.tx_item10.show
+                call items_info_pr_ind.en_sn10.show
+                call items_info_pr_ind.vn_item10.show
+                call items_info_pr_ind.en_prc10.show
+				call items_info_pr_ind.en_elas10.show
+
+               
+        }
+
+        if !has_item10 {
+                call items_info_pr_ind.tx_item10.hide
+                call items_info_pr_ind.en_sn10.hide
+                call items_info_pr_ind.vn_item10.hide
+                call items_info_pr_ind.en_prc10.hide 
+				call items_info_pr_ind.en_elas10.hide
+
+			 }	
+		
+ }
+ 
+        
+				program check_items_cc
+
+			END
+
+PROGRAM check_items_c
+BEGIN
+ if has_ini   {
+               	call items_info_pr_ind.var_sn.hide
+				call items_info_pr_ind.var_prc1.hide
+				call items_info_pr_ind.var_elas1.hide
+				call items_info_pr_ind.var_item.hide 
+			   call  items_info_pr_ind.cb_items.show
+			   call  items_info_pr_ind.ed_items.hide
+			   }
+ if !has_ini   {
+			   call  items_info_pr_ind.cb_items.hide
+			   call  items_info_pr_ind.ed_items.show
+			   call items_info_pr_ind.var_sn.show
+				call items_info_pr_ind.var_prc1.show
+				call items_info_pr_ind.var_elas1.show
+				call items_info_pr_ind.var_item.show
+				
+			   }			   
+			   
+END		
+
+PROGRAM check_items_cc
+BEGIN
+		        
+			if !has_ini {
+			
+                call items_info_pr_ind.tx_fr.show
+                call items_info_pr_ind.tx_fr2.show 
+                call items_info_pr_ind.tx_in3.show 
+                call items_info_pr_ind.tx_in4.show
+				call items_info_pr_ind.tx_item1.hide
+				call items_info_pr_ind.tx_note.hide
+                call items_info_pr_ind.en_sn1.hide
+                call items_info_pr_ind.vn_item1.hide
+                call items_info_pr_ind.en_prc1.hide 
+				call items_info_pr_ind.en_elas1.hide 
+				
+				call items_info_pr_ind.tx_item2.hide
+                call items_info_pr_ind.en_sn2.hide
+                call items_info_pr_ind.vn_item2.hide
+                call items_info_pr_ind.en_prc2.hide
+	            call items_info_pr_ind.en_elas2.hide 
+				
+			    call items_info_pr_ind.tx_item3.hide
+                call items_info_pr_ind.en_sn3.hide
+                call items_info_pr_ind.vn_item3.hide
+                call items_info_pr_ind.en_prc3.hide
+				call items_info_pr_ind.en_elas3.hide 
+		
+				
+				call items_info_pr_ind.tx_item4.hide
+                call items_info_pr_ind.en_sn4.hide
+                call items_info_pr_ind.vn_item4.hide
+                call items_info_pr_ind.en_prc4.hide
+				call items_info_pr_ind.en_elas4.hide 
+	
+				
+				call items_info_pr_ind.tx_item5.hide
+                call items_info_pr_ind.en_sn5.hide
+                call items_info_pr_ind.vn_item5.hide
+                call items_info_pr_ind.en_prc5.hide
+				call items_info_pr_ind.en_elas5.hide 
+
+				
+			    call items_info_pr_ind.tx_item6.hide
+                call items_info_pr_ind.en_sn6.hide
+                call items_info_pr_ind.vn_item6.hide
+                call items_info_pr_ind.en_prc6.hide
+				call items_info_pr_ind.en_elas6.hide 
+			
+				
+				call items_info_pr_ind.tx_item7.hide
+                call items_info_pr_ind.en_sn7.hide
+                call items_info_pr_ind.vn_item7.hide
+                call items_info_pr_ind.en_prc7.hide
+				call items_info_pr_ind.en_elas7.hide 
+				
+				
+				call items_info_pr_ind.tx_item8.hide
+                call items_info_pr_ind.en_sn8.hide
+                call items_info_pr_ind.vn_item8.hide
+                call items_info_pr_ind.en_prc8.hide
+				call items_info_pr_ind.en_elas8.hide 
+		
+	            
+				call items_info_pr_ind.tx_item9.hide
+                call items_info_pr_ind.en_sn9.hide
+                call items_info_pr_ind.vn_item9.hide
+                call items_info_pr_ind.en_prc9.hide
+				call items_info_pr_ind.en_elas9.hide 
+			
+				
+			    call items_info_pr_ind.tx_item10.hide
+                call items_info_pr_ind.en_sn10.hide
+                call items_info_pr_ind.vn_item10.hide
+                call items_info_pr_ind.en_prc10.hide
+				call items_info_pr_ind.en_elas10.hide 
+		     
+			   
+			   }
+			  
+END		
+	   
+
+PROGRAM item1_output
+BEGIN
+ if (has_item1 & items_info_pr_ind.chk_per11 ) {
+                                
+     
+                     put " it1(" 
+					 optionarg items_info_pr_ind.en_sn1
+					 optionarg items_info_pr_ind.vn_item1
+                     optionarg items_info_pr_ind.en_prc1
+					  optionarg items_info_pr_ind.en_elas1
+					
+					 put ")"
+}
+END
+
+
+
+PROGRAM item2_output
+BEGIN
+        if has_item2 & has_ini {
+					 put " it2(" 
+					 optionarg items_info_pr_ind.en_sn2
+                     optionarg items_info_pr_ind.vn_item2 
+                     optionarg items_info_pr_ind.en_prc2
+					 optionarg items_info_pr_ind.en_elas2
+					 
+					 put ")"
+        }
+END
+
+PROGRAM item3_output
+BEGIN
+        if has_item3 & has_ini {
+		              put " it3(" 
+					 optionarg items_info_pr_ind.en_sn3
+					 optionarg items_info_pr_ind.vn_item3
+                     optionarg items_info_pr_ind.en_prc3
+					 optionarg items_info_pr_ind.en_elas3
+					 put ")"
+        }
+END
+
+PROGRAM item4_output
+BEGIN
+        if has_item4 & has_ini {
+					 put " it4(" 
+					 optionarg items_info_pr_ind.en_sn4
+                     optionarg items_info_pr_ind.vn_item4
+                     optionarg items_info_pr_ind.en_prc4
+					optionarg items_info_pr_ind.en_elas4
+					 put ")"
+        }
+END
+
+PROGRAM item5_output
+BEGIN
+       if has_item5 & has_ini {
+					  put " it5(" 
+					 optionarg items_info_pr_ind.en_sn5
+					 optionarg items_info_pr_ind.vn_item5
+                     optionarg items_info_pr_ind.en_prc5
+					 optionarg items_info_pr_ind.en_elas5
+					 put ")"
+        }
+END
+
+PROGRAM item6_output
+BEGIN
+       if has_item6 & has_ini {
+	                 put " it6(" 
+					 optionarg items_info_pr_ind.en_sn6
+					 optionarg items_info_pr_ind.vn_item6
+                     optionarg items_info_pr_ind.en_prc6
+					optionarg items_info_pr_ind.en_elas6
+					 put ")"
+        }
+END
+
+PROGRAM item7_output
+BEGIN
+       if has_item7 & has_ini {
+					  put " it7(" 
+                     optionarg items_info_pr_ind.en_sn7
+					 optionarg items_info_pr_ind.vn_item7
+                     optionarg items_info_pr_ind.en_prc7
+					 optionarg items_info_pr_ind.en_elas7
+
+					 put ")"
+        }
+END
+
+PROGRAM item8_output
+BEGIN
+       if has_item8 & has_ini{
+					  put " it8(" 
+					 optionarg items_info_pr_ind.en_sn8
+					 optionarg items_info_pr_ind.vn_item8
+                     optionarg items_info_pr_ind.en_prc8
+				    optionarg items_info_pr_ind.en_elas8
+
+					 put ")"
+        }
+END
+
+PROGRAM item9_output
+BEGIN
+       if has_item9 & has_ini {
+					  put " it9(" 
+					 optionarg items_info_pr_ind.en_sn9
+                     optionarg items_info_pr_ind.vn_item9  
+                     optionarg items_info_pr_ind.en_prc9
+				    optionarg items_info_pr_ind.en_elas9
+					 put ")"
+        }
+END
+
+        
+PROGRAM item10_output
+BEGIN
+       if has_item10 & has_ini {
+					  put " it10(" 
+					 optionarg items_info_pr_ind.en_sn10
+                     optionarg items_info_pr_ind.vn_item10   
+                     optionarg items_info_pr_ind.en_prc10
+					optionarg items_info_pr_ind.en_elas10
+					 put ")"
+                     }
+					 
+	   
+ 
+ 				 
+END
+
+
+
+PROGRAM var_output
+BEGIN
+       if !has_ini {
+						 optionarg items_info_pr_ind.var_sn 
+						 optionarg items_info_pr_ind.var_item
+						 optionarg items_info_pr_ind.var_prc1
+						 optionarg items_info_pr_ind.var_elas1
+						 optionarg items_info_pr_ind.cb_ini
+						 
+                     }
+					
+END
+
+
+
+
+
+

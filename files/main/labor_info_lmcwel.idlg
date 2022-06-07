@@ -1,0 +1,64 @@
+
+
+
+DIALOG labor_info_lmcwel,  tabtitle("Labor Markets and Incomes")
+BEGIN
+  DEFINE colu0  20
+  DEFINE colu1 70
+  DEFINE colu11 155
+  DEFINE colu2 160
+  DEFINE colu3 310
+  DEFINE colu4 440
+  DEFINE colu5 550
+  DEFINE colu6 660
+  DEFINE colu7 650
+  DEFINE colu8 740
+  
+  DEFINE coluwd0 55
+  DEFINE coluwd1 100
+  DEFINE coluwd12 140
+  DEFINE coluwd11 80
+  DEFINE coluwd111 40
+  DEFINE coluwd4 160
+  DEFINE coluwd3 120
+
+ 
+        
+     GROUPBOX gr10  10    10  760 80,                         ///
+            label("Personal income datafile: ")           
+    TEXT  tx_dbsfile1     20    30    200      .,                 ///  
+         label("Data file of the personal incomes:*")                                
+   
+    FILE  incomes      220    @     500      .,                    ///
+    label ("Browse...")    save option("incomes")                   ///
+    filter("MetaFile (*.dta)*.dta*.* (*.*)*.*") 
+	
+
+    TEXT  tx_dbsfile10     20    50    580      .,                 ///  
+         label("This data file must be composed of the three variables: hhid | sector | income")      
+
+GROUPBOX gr20      10    140  760 80,                         ///
+            label("Economic sectors datafile: ")   
+TEXT  tx_dbsfile2     20    +20    200      .,                 ///  
+         label("Data file of economic sectors:*")                                
+   
+   
+    FILE  sectors      220    @     500      .,                    ///
+    label ("Browse...")    save option("sectors")                   ///
+    filter("MetaFile (*.dta)*.dta*.* (*.*)*.*") 
+
+	 TEXT  tx_dbsfile20     20    +20    580      .,                 ///  
+     label("This data file must be composed of the two variables: sector | impact")      
+
+END
+
+
+
+
+
+
+
+
+
+
+

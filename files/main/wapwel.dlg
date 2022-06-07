@@ -1,0 +1,578 @@
+/************************************************************************************/
+/* wapwel: Labor Market Concentration and Welfare  (Version 3.00)                   */
+/************************************************************************************/
+/* Conceived  by Dr. Araar Abdelkrim, Sergio Olivieri and Carlos Rodriguez Castelan */
+/* World Bank and Universite Laval, Quebec, Canada                                  */
+/* email : aabd@ecn.ulaval.ca                                                       */
+/* Phone : 1 418 656 7507                                                           */
+/************************************************************************************/
+/*   wapwel.dlg                                                                     */
+/************************************************************************************/
+
+
+
+
+VERSION 9.2
+SYNCHRONOUS_ONLY
+
+INCLUDE graph_header
+POSITION . . 860 540
+
+
+DIALOG main, label("WELCOM| Wage Adjustements, Prices  and Welfare --> wapwel command") tabtitle("Main")
+BEGIN
+  DEFINE col0  20
+  DEFINE col1 15
+  DEFINE col2 50
+  DEFINE col3 170
+  DEFINE col4 280
+  DEFINE col5 400
+  
+  DEFINE colwd0 55
+  DEFINE colwd1 105
+  DEFINE colwd2 105
+  DEFINE colwd3 80
+  
+
+  DEFINE _x _xsetbu
+  DEFINE _y _top
+  
+   
+    GROUPBOX gr01  10    10  410 80,                         ///
+            label("Dialog box inputs: ")           ///
+                   
+    TEXT txt_vname11     20    +20    140      .,                 ///  
+                  label("Load the inputs:   ")                           
+       
+    BUTTON  bu_load    140    @     270      .,                 ///
+    label("Load") onpush("view dialog wapwell_ini_wap") 
+         
+         
+        TEXT  tx_dbsfile     20    +25    140      .,                 ///  
+         label("Save the inputs:")                                
+   
+   FILE  dbsamex      140    @     270      .,                    ///
+    label ("Browse...")    save option("inisave")                   ///
+    filter("MetaFile (*.wap)*.wap*.* (*.*)*.*")   
+                          
+
+   GROUPBOX chk_per1  10    110  410 160,                         ///
+           label("General information on sampled households: ")                       ///
+
+
+  
+
+                   
+  
+  TEXT     tx_var      20    +30    180      .,                 ///
+   label("Per capita welfare*:          ") 
+         
+  VARNAME  vn_pcexp      260    @     150      .,                 ///
+                  
+  
+                   
+ TEXT     tx_var3      20   +30    180      .,                 ///
+           label("Household size*:   ")  
+ VARNAME  vn_hhs     260    @     150      .,                 ///
+           option(hsize)    
+ 
+ TEXT     tx_pl1      20   +30    180      .,                 ///
+           label("Poverty line*:   ")  
+ VARNAME  vn_pl1      260    @     150      .,                 ///
+           option(pline)    
+  
+  GROUPBOX chk_per7  10    +80  410 80,                         ///
+           label("Group variable (by default is the quintiles) ")         
+                   
+ TEXT     tx_hhg      20   +30    180       .,                 ///
+           label("Household group:   ")  
+ VARNAME  vn_hhg      260 @     150      .,                 ///
+           option(hgroup)  
+                   
+
+
+ TEXT     txt_note1     10    +60    400      .,                 ///  
+             label("Note: The (*) indicates a required information.")     
+  
+  
+ 
+
+        
+   GROUPBOX parineq 440    10    410 80,                      ///
+           label("Paremeters of inequality indices")
+
+   TEXT     txt_param1     450    +25    100      .,                 ///  
+             label("Atkinson index (epsilon):")  
+                         
+   EDIT    ed_epsilon     610    @     230     .,   ///
+   option(epsilon) default(.5)
+   
+   TEXT     txt_param2     450    +25    100      .,                 ///  
+   label("Generalised Entropy index  (theta):")  
+                         
+   EDIT    ed_theta     610    @     230     .,   ///
+   option(theta) default(0) 
+  
+  
+        
+   
+ GROUPBOX iogr 440    +70    410 60,                      ///
+           label("I/O price change model")                      
+            /*            
+        TEXT     tx_ap_ini 450     +30       120       .,           ///
+          label("The main model:") 
+      
+COMBOBOX cb_ioap 570      @          270       .,       ///
+          contents(comb_appr_ini)                             ///
+          values(comb_appr_val)                                     ///                            
+          default(1)                  ///
+          dropdownlist option(iomodel)   onselchangelist(cond2_change)
+                  
+ TEXT     tx_ap_ini_sh 450     +25       120       .,           ///
+          label("Price shocks:") 
+      
+COMBOBOX cb_ioap_sh 570      @          270       .,       ///
+          contents(comb_appr_sh_ini)                             ///
+          values(comb_appr_sh_val)                                     ///                            
+          default(1)                  ///
+          dropdownlist option(tyshock)          
+            */      
+ TEXT     tx_ap_ini_ad 450     +25       120       .,           ///
+          label("Price adjustment:") 
+      
+COMBOBOX cb_ioap_ad 570      @          270       .,       ///
+          contents(comb_appr_ad_ini)                             ///
+          values(comb_appr_ad_val)                                     ///                            
+          default(1)                  ///
+          dropdownlist option(adshock)    
+     
+
+  
+                             
+
+   DEFINE _x 40
+   DEFINE _y 450
+     
+  INCLUDE _bu_svyset
+
+END
+
+
+
+
+
+
+LIST cb_move
+BEGIN
+ Competitive to Concentrated Market
+ Concentrated to Competitive Market
+END
+
+LIST cb_move_val
+BEGIN
+ 1
+-1
+END
+
+
+
+
+
+
+LIST comb_appr_sh_ini
+BEGIN
+        Exogenous  model 
+        Endogenous model
+END
+
+LIST comb_appr_sh_val
+BEGIN
+        1
+        2
+END
+
+
+LIST comb_appr_ad_ini
+BEGIN
+        Short term (one period) 
+        Long  term
+END
+
+LIST comb_appr_ad_val
+BEGIN
+        1
+        2
+END
+
+
+LIST comb_appr_ini
+BEGIN
+        M1: Cost push prices
+        M2: Marginal profit push prices
+END
+
+
+
+
+SCRIPT PREINIT
+BEGIN
+      
+        create BOOLEAN has_str1
+        create BOOLEAN has_str2
+        create BOOLEAN has_str3
+                
+                create BOOLEAN has_sel1
+        create BOOLEAN has_sel2
+        create BOOLEAN has_sel3
+                
+            create BOOLEAN has_mod1
+        create BOOLEAN has_mod2
+                
+                
+                
+            create BOOLEAN has_item1
+        create BOOLEAN has_item2
+        create BOOLEAN has_item3
+        create BOOLEAN has_item4
+        create BOOLEAN has_item5
+        create BOOLEAN has_item6
+                create BOOLEAN has_item7
+        create BOOLEAN has_item8
+        create BOOLEAN has_item9
+        create BOOLEAN has_item10
+                create BOOLEAN has_ini
+
+                                
+END
+
+
+LIST str_change
+BEGIN
+        script str1
+        script str2
+                script str3
+        
+END
+
+
+SCRIPT str1
+BEGIN
+        has_str1.settrue
+        has_str2.setfalse
+                has_str3.setfalse
+        program check_strs
+END
+
+SCRIPT str2
+BEGIN
+        has_str1.setfalse
+        has_str2.settrue
+                has_str3.setfalse
+        program check_strs
+END
+
+
+SCRIPT str3
+BEGIN
+        has_str1.setfalse
+        has_str2.setfalse
+                has_str3.settrue
+        program check_strs
+END
+
+
+PROGRAM check_strs
+BEGIN
+if (has_str1){
+
+
+call main.tx_osize.hide
+call main.ed_osize.hide
+
+call main.tx_nfirms.hide
+call main.ed_nfirms.hide
+}
+
+if has_str2{
+
+
+call main.tx_osize.hide
+call main.ed_osize.hide
+
+call main.tx_nfirms.show
+call main.ed_nfirms.show
+
+}
+
+
+if has_str3{
+
+
+call main.tx_osize.show
+call main.ed_osize.show
+
+call main.tx_nfirms.hide
+call main.ed_nfirms.hide
+}
+
+END
+
+
+
+LIST sel_change
+BEGIN
+        script sel1
+        script sel2
+                script sel3
+        
+END
+
+
+SCRIPT sel1
+BEGIN
+        has_sel1.settrue
+        has_sel2.setfalse
+                has_sel3.setfalse
+        program check_sels
+END
+
+SCRIPT sel2
+BEGIN
+        has_sel1.setfalse
+        has_sel2.settrue
+                has_sel3.setfalse
+        program check_sels
+END
+
+
+SCRIPT sel3
+BEGIN
+        has_sel1.setfalse
+        has_sel2.setfalse
+                has_sel3.settrue
+        program check_sels
+END
+
+
+
+LIST mod_change
+BEGIN
+        script mod1
+        script mod2   
+END
+
+
+SCRIPT mod1
+BEGIN
+        has_mod1.settrue
+        program check_sels
+END
+
+SCRIPT mod2
+BEGIN
+        has_mod1.setfalse
+        program check_sels
+END
+
+
+PROGRAM check_sels
+BEGIN
+if (has_sel1){
+call main.txt_subs.hide    
+call main.txt_model.hide     
+call main.cb_model.hide      
+call main.ed_subs.hide 
+}
+
+if !has_sel1{
+   
+call main.txt_model.show     
+call main.cb_model.show 
+if has_mod1{     
+call main.ed_subs.hide
+call main.txt_subs.hide 
+}
+if !has_mod1{     
+call main.ed_subs.show
+call main.txt_subs.show
+}
+}
+
+END
+
+
+
+PROGRAM POSTINIT_PROGRAM
+BEGIN
+        put "awapwel2"
+        stata hidden
+END
+
+
+DIALOG items_info_ind ,  tabtitle("Items")
+BEGIN
+  DEFINE colu0  20
+  DEFINE colu1 50
+  DEFINE colu11 155
+  DEFINE colu2 180
+  DEFINE colu3 310
+    DEFINE colu4 420
+  DEFINE colu5 470
+  DEFINE colu6 560
+  DEFINE colu7 650
+  DEFINE colu8 740
+  
+  DEFINE coluwd0 55
+  DEFINE coluwd1 100
+  DEFINE coluwd11 80
+  DEFINE coluwd111 40
+  DEFINE coluwd4 160
+
+ GROUPBOX chk_per11  10    10  760 120,                         ///
+            label("Items info: ")
+    
+
+
+
+ TEXT     tx_items colu1      +20      100       .,           ///
+          label("Number of items*:") 
+          
+          
+ EDIT    ed_items 230      @         120       .,        ///
+         option(nitems)       default(1)            
+   
+  TEXT     tx_fr colu1         +40      70    .,           ///
+          label("Short names")
+  
+  
+  TEXT     tx_fr2 colu2         @      100    .,           ///
+          label("Varnames*")
+                  
+   TEXT     tx_ms     colu3      @         coluwd4         .,           ///
+        label("Matching I/O sectors")           
+
+  
+  
+ 
+ VARNAME   var_sn    colu1     +20         coluwd1    .,           ///
+        label("")      option(itnames) 
+                
+  VARNAME  var_item    colu2     @         coluwd1    .,           ///
+        label("")  option(itvnames)              
+                       
+   
+   VARNAME  var_ms   colu3      @         coluwd1         .,           ///
+        option(match)      default()                                        ///
+        label("")       
+         
+		 
+ GROUPBOX chk_per33  10    +30  760 120,                         ///
+            label("Sectoral info: ")
+    
+
+
+
+          
+   
+  TEXT     tx_fr01 colu1         +40      70    .,           ///
+          label("Short names")
+  
+  
+ VARNAME   var_secsn    colu1     +20         coluwd1    .,           ///
+        label("")      option(secnames) 
+                
+    
+                		 
+                
+                
+   GROUPBOX chk_per22  10    +110  760 60,                         ///
+            label("I/O matrix info: ")    
+                         
+                                 
+ 
+    TEXT  tx_dbsfile     20    +20    160      .,                 ///  
+         label("Data file of the I/O matrix:*")                                
+   
+    FILE  dbiom      220    @     260      .,                    ///
+    label ("Browse...")    save option("iomatrix")                   ///
+    filter("MetaFile (*.dta)*.dta*.* (*.*)*.*") 
+        
+             
+END
+
+
+INCLUDE tb_options_wap
+INCLUDE gr_options_wap
+
+INCLUDE ifin
+
+HELP hlp1,   view("help wapwel")
+RESET res1
+OK ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY copy1
+
+
+PROGRAM command
+BEGIN
+        put "wapwel "
+
+        
+                
+        require main.vn_pcexp
+        varlist [main.vn_pcexp]
+                
+                INCLUDE _ifin_pr
+
+        put " "
+       
+        beginoptions   
+        optionarg main.vn_hhs
+        optionarg main.vn_pl1     
+        optionarg main.dbsamex
+                
+      
+                
+                                                                                
+        optionarg main.vn_hhg
+                                                                    
+                 if !main.ed_theta.isdefault() {
+                           optionarg main.ed_theta
+                 }   
+				 
+			 if !main.cb_ioap_ad.isdefault() {
+                           optionarg main.cb_ioap_ad
+                 } 
+                                 
+                 if !main.ed_epsilon.isdefault() {
+                           optionarg main.ed_epsilon
+                 } 
+				 
+		if !items_info_ind.ed_items.isdefault() {
+		  optionarg items_info_ind.ed_items
+		}
+        
+		
+		optionarg items_info_ind.var_sn
+		optionarg items_info_ind.var_item
+		optionarg items_info_ind.var_ms
+		optionarg items_info_ind.dbiom
+		
+		optionarg items_info_ind.var_secsn
+              
+         put " " /program  gra_output_wap
+
+        
+                
+        optionarg  tb_options_wap.fnamex
+        optionarg tb_options_wap.ed_tab
+
+                   
+        optionarg gr_options_wap.ed_gra 
+        optionarg gr_options_wap.ed_folgr
+              
+           endoptions 
+        
+       
+END

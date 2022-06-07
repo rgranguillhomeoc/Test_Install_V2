@@ -1,0 +1,13 @@
+{smcl}
+{* November 2017}{...}
+{title:Specifying the codes of graphs to be produced} 
+
+You may want to produce only a subset of graphs. In such case, you have to select the desired graphs by indicating their codes with the option jobs. 
+
+Code: The title of graph
+1  :  Figure 01: The per capita impact on well-being
+2  :  Figure 02: The Lorenz and concentration curves
+
+{title:Example}
+1 
+

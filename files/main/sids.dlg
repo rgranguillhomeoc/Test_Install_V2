@@ -1,0 +1,207 @@
+
+
+
+
+VERSION 9.2
+ 
+
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 760 300
+
+
+DIALOG main, label(" WELCOM|  Single Demand Elasticity System --> sids command") tabtitle("Main")
+
+BEGIN
+
+ GROUPBOX intvar 10     10    700  240,                      ///
+             label("Variables of the model")
+  TEXT   tx_qt      20      25   150   .,                      ///
+        label("Household Quantity:")
+  
+  VARNAME vn_qt   20      45   120       .,                      ///
+        label("") 
+                
+  TEXT tx_pr      160      25   120   .,                      ///
+        label("Price:")
+  
+  VARNAME vn_pr   160      45   120       .,                      ///
+        label("")  
+		
+	  TEXT tx_inc      300      25   120   .,                      ///
+        label("Household Income:")
+  
+  VARNAME vn_inc   300      45   120       .,                      ///
+        label("") 
+		
+		
+   TEXT tx_hg      440      25   120   .,                      ///
+        label("Household Group:")
+  
+  VARNAME vn_hg   440      45   120       .,                      ///
+        label("") 	option(hgroup)	
+		
+   TEXT tx_incpar      580      25   120   .,                      ///
+        label("Income Partition:")
+  
+  VARNAME vn_incpar   580      45   120       .,                      ///
+        label("") 	option(incpar)	
+
+  TEXT   tx_indcat      20     +30   260   .,                      ///
+        label("Other categorical independant variables:")
+  
+  VARLIST vl_indcat   20      +20   330       .,   ///
+  option(indcat)
+  
+   TEXT   tx_indcon      20     +30   260   .,                      ///
+  label("Other continuous independant variables:")
+  
+                               /*
+                */
+  VARLIST vl_indcon   20      +20   330       .,    ///
+    option(indcon)
+   
+  
+  CHECKBOX ck_uinc 20     +40    200  .,                           /*
+                */ label("Includ the Ln_Income")               /*
+                */ option("inc") default(1)
+  
+  CHECKBOX ck_inti 20     +25    200  .,                           /*
+                */ label("Interaction: Ln_Income*Hgroup")               /*
+                */ option("incint")  default(0)
+   
+   DEFINE _x 20
+   DEFINE _y 260
+     
+  INCLUDE _bu_svyset
+
+
+END
+
+
+
+
+DIALOG resop,  tabtitle("Results")
+
+BEGIN
+                                        
+SPINNER  sp_dec    10       25      50    .,                    /*
+                */ label("Decimals")                            /*
+                */ min(0) default(4) max(12)                            /*
+                */ option(dec)
+
+TEXT     sp_txt  70      25      200      .,                            /*
+                */ label("Number of decimals")  
+
+				
+  CHECKBOX ck_dregres 10     +35    300  .,                           /*
+                */ label("Display regression results")               /*
+                */ option("dregres")  default(0)                               /*
+                */
+
+  CHECKBOX ck_dgra 10     +35    500  .,                           /*
+                */ label("Display the graph of elasticities according to the income partitions")               /*
+                */ option("dgra")    default(0)                             /*
+                */
+				
+
+CHECKBOX ck_excel     10    +40     560    75,             ///
+        groupbox label("Excel file: Produce an Excel file of results")                 ///
+        onclickon(program ptb_options_t_excel)                      ///
+        onclickoff(script  tb_options_t_excel)    
+
+TEXT  tx_nxfile     20    +25    40      .,                 ///  
+label("File :")           
+            
+        
+FILE  fnamex      80    @     400      .,                 ///
+label ("Browse...")    save option("xfil")                   ///
+filter("MetaFile (*.xml)*.xml*.* (*.*)*.*")  
+ 
+
+				
+  				
+END
+
+
+
+
+PROGRAM ptb_options_t_excel
+BEGIN
+        if resop.ck_excel {
+                        call resop.tx_nxfile.enable
+                        call resop.fnamex.enable 
+
+        }
+                
+           if !resop.ck_excel {
+                        call resop.tx_nxfile.disable
+                        call resp.fnamex.disable 
+
+        }
+END
+
+
+SCRIPT tb_options_t_excel
+BEGIN
+                resop.tx_nxfile.disable
+                resop.fnamex.disable
+
+                   
+ END
+
+
+
+
+HELP hlp1,   view("help sids")
+RESET res1
+OK ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY copy1
+
+PROGRAM command
+BEGIN
+        put "sids "
+        require  main.vn_qt
+        varlist [main.vn_qt]
+		require  main.vn_pr
+        varlist [main.vn_pr]
+	    require  main.vn_inc
+        varlist [main.vn_inc]
+
+        beginoptions   
+        put " "
+        optionarg main.vn_hg  
+	    optionarg main.vn_incpar 
+		optionarg main.vl_indcat
+		optionarg main.vl_indcon
+		
+		if !main.ck_inti.isdefault() {
+		optionarg  main.ck_inti
+		}
+		
+		if !main.ck_uinc.isdefault() {
+		optionarg  main.ck_uinc
+		}
+		
+                        if !resop.sp_dec.isdefault() {
+                        optionarg resop.sp_dec
+                        }
+	
+		
+		if !resop.ck_dregres.isdefault() {
+		optionarg resop.ck_dregres
+		}
+		
+		if !resop.ck_dgra.isdefault() {
+		optionarg resop.ck_dgra
+		}
+		
+		optionarg resop.fnamex
+                                            
+        endoptions
+        
+        
+        
+END

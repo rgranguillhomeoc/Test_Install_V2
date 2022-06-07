@@ -1,0 +1,110 @@
+* OCT2021 - 
+v 3
+d {bf:WELCOM   : WELfare and COMpetition}
+d Version       : Version           3.60   
+d Date          : October           2021
+d Stata Version : Required  14.0 and higher
+d WELCOM is a product of the World Bank.
+d
+d Authors : {bf:Abdelkrim Araar(a)}  {bf:Eduardo Malasquez (b)} {bf:Sergio Olivieri(c)}  {bf:Carlos Rodriguez-Castelan (d)} 
+d
+d Emails  :  
+d           (a) {browse "mailto:aabd@ecn.ulaval.ca":aabd@ecn.ulaval.ca}  
+d           (b) {browse "mailto:emalasquez@worldbank.org":emalasquez@worldbank.org}
+d           (c) {browse "mailto:solivieri@worldbank.org":solivieri@worldbank.org}   
+d           (d) {browse "mailto:crodriguezc@worldbank.org":crodriguezc@worldbank.org}
+d 
+d Website : {browse "http://dasp.ecn.ulaval.ca/welcom/mi/":http://dasp.ecn.ulaval.ca/welcom/mi/}
+d
+
+f files/main/addmimenu.ado     
+f files/main/addmimenu3.ado    
+f files/main/amcwel.ado        
+f files/main/amcwel2.ado       
+f files/main/asdbsave_mcw.ado  
+f files/main/clore.ado         
+f files/main/curvnpe.ado       
+f files/main/distable.ado  
+f files/main/distable2.ado
+f files/main/extend_opt_graph.ado
+f files/main/extend_opt_item_mcwel.ado
+f files/main/fgini.ado         
+f files/main/Graphs            
+f files/main/graph_header.idlg 
+f files/main/gr_options_mc.idlg
+f files/main/imwmc.ado
+f files/main/imwmc_el.ado
+f files/main/imwmc_ces.ado     
+f files/main/imwmc_ces_all.ado 
+f files/main/imwmc_cob_doug.ado
+f files/main/Installer         
+f files/main/items_info_mcwel.idlg
+f files/main/jgraphs_mc.hlp  
+f files/main/jtables_mc.hlp  
+f files/main/manual            
+f files/main/mcgropt.ado  
+f files/main/mcjob110.ado  
+f files/main/mcjob12.ado
+f files/main/mcjob13.ado
+f files/main/mcjob21.ado       
+f files/main/mcjob22.ado       
+f files/main/mcjob23.ado       
+f files/main/mcjob31.ado       
+f files/main/mcjob32.ado 
+f files/main/mcjob33.ado 
+f files/main/mcjob41.ado       
+f files/main/mcjob42.ado       
+f files/main/mcjob43.ado  
+f files/main/mcjob44.ado 
+f files/main/mcjob51.ado       
+f files/main/mcjob51b.ado      
+f files/main/mcjob52.ado       
+f files/main/mcjob53.ado       
+f files/main/mcjob61.ado       
+f files/main/mcjob61b.ado      
+f files/main/mcjob62.ado       
+f files/main/mcjob63.ado       
+f files/main/mcjob64.ado       
+f files/main/mcjobatkinson.ado 
+f files/main/mcjobentropy.ado  
+f files/main/mcjobgini.ado     
+f files/main/mcjobgr1.ado      
+f files/main/mcjobgr2.ado      
+f files/main/mcjobgr3.ado      
+f files/main/mcjobgr4.ado      
+f files/main/mcjobgr5.ado      
+f files/main/mcjobgr6.ado      
+f files/main/mcjobpov.ado      
+f files/main/mcjobpov_light.ado
+f files/main/mcjobratio.ado    
+f files/main/mcjobstat.ado     
+f files/main/mcprcne.ado         
+f files/main/mcwel.ado         
+f files/main/mcwel.dlg         
+f files/main/mcwel.sthlp       
+f files/main/mcwell_ini_mcw.ado
+f files/main/mcwell_ini_mcw.dlg
+f files/main/mcwel_example     
+f files/main/mcwel_example.mcw 
+f files/main/migropt.ado       
+f files/main/mijobgr1.ado      
+f files/main/mijobgr2.ado      
+f files/main/mijobgr3.ado      
+f files/main/welcom.dlg         
+f files/main/mi_gr_options.idlg
+f files/main/mk_xtab_mc.ado    
+f files/main/mk_xtab_ms.ado    
+f files/main/tabtitmc.ado      
+f files/main/tb_options_mc.idlg
+f files/main/xml_tab.ado
+f files/main/xml_tabas.ado
+f files/main/xml_taba2.ado
+f files/main/nargs.ado
+f files/main/basicstats.ado
+f files/main/aggrvar.ado
+f files/main/_nargs.ado
+f files/main/_welcom_vers.ado
+f files/main/_welcom_inst.ado
+f files/main/_welcom_menu.ado
+f files/main/_welcom_vers.ado 
+f files/main/graph_header.idlg

@@ -1,0 +1,37 @@
+
+
+VERSION 9.2
+
+
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 560 100
+
+
+DIALOG main, label("WELCOM| Initialise the dialog box of the command: wapwel") tabtitle("Main")
+
+  
+BEGIN
+  TEXT     tx_using      20     20     200        .,       ///
+        label("Filename of wapwel dialog box inputs:")
+
+        FILE  fnamex      220    @     280      .,    ///
+        label ("Browse...")    save                    ///
+        filter("MetaFile (*.wap)|*.wap|*.* (*.*)|*.*")  
+  
+END
+
+
+HELP hlp1,   view("help wapwell_ini_wap")
+RESET res1
+OK ok1,      label("OK")
+CANCEL can1, label("Cancel")
+COPY copy1
+
+PROGRAM command
+BEGIN
+        require main.fnamex
+		put "wapwell_ini_wap "
+		put `"""' main.fnamex `"""'
+        
+END

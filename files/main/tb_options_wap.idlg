@@ -1,0 +1,128 @@
+DIALOG tb_options_wap,  tabtitle("Table Options")
+
+BEGIN
+			  
+		   
+	 
+		
+		
+ CHECKBOX ck_tables     10    20     560    95,             ///
+        groupbox label("Tables: Select the tables to be produced")                 ///
+        onclickon(program ptb_options_t_tables)                      ///
+        onclickoff(script  tb_options_t_tables)
+  TEXT     tx_tab    20 _ss     400   .,              ///
+        label("Specify the codes of tables (type off to do not produce any table):")
+  EDIT     ed_tab     @       _ss     500  .,              ///
+        option(tjobs)                          
+  
+  BUTTON   bu_tab     530 @       15      .,              ///
+        label("?") onpush(view help jtables_wap)        ///
+        tooltip("Help - List of tables and their codes")
+ 
+		   
+
+
+
+
+
+  
+  CHECKBOX ck_excel     10    +100     560    75,             ///
+        groupbox label("Excel file: Produce an Excel file of results")                 ///
+        onclickon(program ptb_options_t_excel)                      ///
+        onclickoff(script  tb_options_t_excel)    
+
+TEXT  tx_nxfile     20    +25    40      .,                 ///  
+label("File :")    	  
+            
+        
+FILE  fnamex      80    @     400      .,                 ///
+label ("Browse...")    save option("xfil")                   ///
+filter("MetaFile (*.xml)*.xml*.* (*.*)*.*")  
+ 
+
+
+END
+
+
+
+
+
+
+PROGRAM ptb_options_t_order
+BEGIN
+        if tb_options_wap.ck_order {
+                call tb_options_wap.tx_aggr.enable
+                call tb_options_wap.ed_aggr.enable
+                call tb_options_wap.bu_aggr.enable
+        }
+		
+	 if !tb_options_wap.ck_order {
+                call tb_options_wap.tx_aggr.disable
+                call tb_options_wap.ed_aggr.disable
+                call tb_options_wap.bu_aggr.disable
+        }
+END
+
+
+SCRIPT tb_options_t_order
+BEGIN
+                tb_options_wap.tx_aggr.disable
+                tb_options_wap.ed_aggr.disable
+                tb_options_wap.bu_aggr.disable
+END
+
+
+PROGRAM ptb_options_t_tables
+BEGIN
+        if tb_options_wap.ck_tables {
+                call tb_options_wap.tx_tab.enable
+                call tb_options_wap.ed_tab.enable
+                call tb_options_wap.bu_tab.enable
+        }
+		
+	 if !tb_options_wap.ck_tables {
+                call tb_options_wap.tx_tab.disable
+                call tb_options_wap.ed_tab.disable
+                call tb_options_wap.bu_tab.disable
+        }
+END
+
+
+SCRIPT tb_options_t_tables
+BEGIN
+                tb_options_wap.tx_tab.disable
+                tb_options_wap.ed_tab.disable
+                tb_options_wap.bu_tab.disable
+END
+
+
+
+PROGRAM ptb_options_t_excel
+BEGIN
+        if tb_options_wap.ck_excel {
+			call tb_options_wap.tx_nxfile.enable
+			call tb_options_wap.fnamex.enable 
+
+        }
+		
+	   if !tb_options_wap.ck_excel {
+ 			call tb_options_wap.tx_nxfile.disable
+			call tb_options_wap.fnamex.disable 
+
+        }
+END
+
+
+SCRIPT tb_options_t_excel
+	BEGIN
+	    	tb_options_wap.tx_nxfile.disable
+			tb_options_wap.fnamex.disable
+
+		   
+	END
+
+
+
+	
+			
+

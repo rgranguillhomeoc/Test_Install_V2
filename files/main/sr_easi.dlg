@@ -1,0 +1,227 @@
+
+
+
+
+VERSION 14.0
+SYNCHRONOUS_ONLY 
+
+INCLUDE graph_header
+//INCLUDE header
+POSITION . . 790 400
+DIALOG main, label(" WELCOM| Price Elasticity | EASI model --> sr_easi command") tabtitle("Main")
+
+BEGIN
+
+   GROUPBOX chk_per11  10    10  380 80,                         ///
+            label("Dialog box inputs: ")           ///
+                   
+    TEXT txt_vname11     20    +20    140      .,                 ///  
+                  label("Load the inputs:   ")                           
+       
+    BUTTON  bu_load    140    @     240      .,                 ///
+    label("Load") onpush("view dialog easi_db_ini") 
+         
+         
+   TEXT  tx_dbsfile     20    +25    140      .,                 ///  
+         label("Save the inputs:")                                
+   
+   FILE  dbsamex      140    @     240      .,                    ///
+    label ("Browse...")    save option("inisave")                   ///
+    filter("MetaFile (*.easi)*.easi*.* (*.*)*.*")   
+
+
+ GROUPBOX intvar 10     +40    380  250,                      ///
+             label("Data and variables of the model")
+  
+  
+	
+		
+TEXT   tx_share      20      +25   220   .,                      ///
+        label("Expenditure shares*:")
+  
+VARLIST name_items   20      +20   360       .,                      ///
+        label("") 
+  
+ TEXT   tx_price      20      +25   220   .,                      ///
+        label("Prices*:")
+		
+  
+VARLIST  name_prices   20      +20   360       .,                      ///
+        label("") option(prices)
+		
+		
+   TEXT tx_hhexp      20      +30   140   .,                      ///
+        label("HH expenditures*:")
+		
+VARNAME vn_hhexp   150      @   230       .,                      ///
+        label("") option(expenditure)
+		
+
+ TEXT   tx_inddemo      20     +30   260   .,                      ///
+        label("Demographic variables:")
+  
+  
+VARLIST  vl_inddemo   20       +20   360       .,   ///
+  option(demographics)
+ 
+ 
+   TEXT   tx_sitems      20      +25   220   .,                      ///
+        label("Short names of items:")
+		
+  
+  EDIT name_snames   20      +20   360       .,                      ///
+        label("") option(snames)
+
+  
+  GROUPBOX percentile 400    10    380 140,                      ///
+           label("The model parameter(s)")
+ 
+ TEXT    tx_power      410     +20   120   .,                      ///
+        label("Power of the EASI model:")
+ 
+ SPINNER  sp_pow    550       @      60    .,                    /*
+                */ min(1) default(5) max(20)                            /*
+                */ option(power)
+
+  CHECKBOX ck_inpy  410     +25    360  .,                           /*
+                */ label("Interaction between prices and income")      /*
+                */ option("inpy")                                      /*
+                */
+				
+  CHECKBOX ck_inpz  410     +25    360  .,                           /*
+                */ label("Interaction between prices and demographics")      /*
+                */ option("inpz")                                      /*
+                */
+				 
+  CHECKBOX ck_inzy  410     +25    360  .,                           /*
+                */ label("Interaction between demographics and income")      /*
+                */ option("inzy")                                      /*
+                */
+  
+  
+  
+   GROUPBOX chk_per33  400    +50  380 60,                         ///
+            label("The R_Tool: ")           ///
+                   
+     
+         
+                              
+   
+   FILE  drtool      420    +25    360      .,                    ///
+    label ("Browse...")    save option("rtool")                   ///
+    filter("MetaFile (*.exe)*.exe*.* (*.*)*.*")   
+  
+
+  
+ 
+	/*
+     GROUPBOX sample 410     10    360  140,                      ///
+             label("Other explanatory variables of the model")
+		*/	 
+   DEFINE _x 20
+   DEFINE _y 240
+   
+     TEXT tx_Note      20      380   250   .,                      ///
+        label("Note(s): the (*) indicates a required information.")
+     
+
+
+
+END
+
+
+
+
+
+
+DIALOG resop,  tabtitle("Results")
+
+BEGIN
+                                        
+SPINNER  sp_dec    10       25      50    .,                    /*
+                */ label("Decimals")                            /*
+                */ min(0) default(3) max(12)                            /*
+                */ option(dec)
+
+TEXT     sp_txt  70      25      140      .,                            /*
+                */ label("Number of decimals")  
+
+                              
+  CHECKBOX ck_dregres 10     +40    200  .,                           /*
+                */ label("Display regression results")               /*
+                */ option("dregres")                                 /*
+                */
+
+ CHECKBOX ck_dislas 10     +40    200  .,                           /*
+                */ label("Display the results of the last item")               /*
+                */ option("dislas")  default(1)                                 /*
+                */
+
+  TEXT  tx_eldecfile     10    +60    140      .,                 ///  
+  label("Save the elasticity file:") 
+  FILE  eldecfile      140   @     270      .,                    ///
+  label ("Browse...")    save option("xfil")                   ///
+  filter("MetaFile (*.xml)*.xml*.* (*.*)*.*")
+                                
+                                
+END
+
+
+
+SCRIPT PREINIT
+BEGIN
+create BOOLEAN has_ini                         
+END
+
+
+PROGRAM POSTINIT_PROGRAM
+BEGIN
+        put "aeasi2"
+        stata hidden
+END
+
+
+
+HELP hlp1,   view("help sr_easi")
+RESET res1
+OK      ok1,      label("OK")
+CANCEL can1, label("Cancel")
+SUBMIT sub1, label("Submit")
+COPY  copy1,
+
+PROGRAM command
+BEGIN
+        put "sr_easi "
+        require  main.name_items
+        varlist [main.name_items]
+      
+
+        beginoptions  
+        put " "
+        optionarg main.name_prices
+		optionarg main.name_snames
+		optionarg main.vn_hhexp
+		optionarg main.dbsamex
+		optionarg main.drtool
+		
+        optionarg main.vl_inddemo
+		
+                        if !resop.sp_dec.isdefault() {
+                        optionarg resop.sp_dec
+                        }
+						
+                optionarg resop.ck_dregres 
+				optionarg resop.ck_dislas
+                optionarg resop.eldecfile
+				
+				optionarg main.sp_pow
+				optionarg main.ck_inpy
+				optionarg main.ck_inpz
+				optionarg main.ck_inzy
+
+                                       
+        endoptions
+        
+        
+        
+END
